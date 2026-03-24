@@ -50,8 +50,26 @@
 .info-row:last-child{border-bottom:none}
 .info-row span:first-child{color:#666}
 .info-row span:last-child{color:#ccc;font-weight:700}
-@media(max-width:700px){.afil-stats{grid-template-columns:1fr 1fr}.afil-hero{flex-direction:column}}
-@media(max-width:480px){.afil-stats{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){
+  .afil-stats{grid-template-columns:1fr 1fr}
+  .afil-hero{flex-direction:column}
+  .afil-page{padding:20px 14px 60px}
+  .afil-hero{padding:20px}
+  .afil-hero-left h1{font-size:1.3rem}
+  .afil-card{padding:18px 14px}
+  .afil-tabs{gap:2px}
+  .afil-tab{font-size:.75rem;padding:8px 8px}
+  .share-btns{flex-direction:column}
+  .btn-share{width:100%;text-align:center}
+  .link-row{flex-direction:column;align-items:flex-start}
+  .btn-copy{width:100%;text-align:center}
+  .saque-form .btn{width:100%}
+}
+@media(max-width:480px){
+  .afil-stats{grid-template-columns:1fr 1fr}
+  .afil-stat{padding:14px 10px}
+  .afil-stat-val{font-size:1.3rem}
+}
 </style>
 </head>
 <body>
