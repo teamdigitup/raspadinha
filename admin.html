@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Raspaetz7 - Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,sans-serif;background:#0b0b18;color:#fff;min-height:100vh;padding:24px}
+.admin-wrap{width:100%;max-width:700px;margin:0 auto}
+.admin-logo{text-align:center;margin-bottom:32px}
+.admin-logo p{color:#555;font-size:.85rem;margin-top:4px}
+.card{background:#13132b;border:1.5px solid #1e1e3a;border-radius:20px;padding:28px;margin-bottom:20px}
+.card h2{font-size:1rem;font-weight:800;color:#f5c518;margin-bottom:20px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.75rem;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;font-weight:700}
+.field input{width:100%;background:#0b0b18;border:1.5px solid #1e1e3a;border-radius:10px;padding:12px 16px;color:#fff;font-size:.95rem;font-family:Inter,sans-serif;outline:none;transition:border-color .2s}
+.field input:focus{border-color:#f5c518}
+.btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;font-family:Inter,sans-serif;transition:all .2s}
+.btn-gold{background:linear-gradient(135deg,#f5c518,#d4a017);color:#0b0b18}
+.btn-gold:hover{opacity:.9}
+.btn-outline{background:transparent;border:1.5px solid #2a2a4a;color:#ccc;margin-top:8px}
+.btn-outline:hover{border-color:#f5c518;color:#f5c518}
+.btn-sm{width:auto;padding:7px 16px;font-size:.8rem;border-radius:8px}
+.btn-green{background:linear-gradient(135deg,#4ade80,#16a34a);color:#0b0b18;border:none;border-radius:8px;padding:7px 16px;font-size:.8rem;font-weight:800;cursor:pointer;font-family:Inter,sans-serif}
+.btn-red{background:transparent;border:1.5px solid #f87171;color:#f87171;border-radius:8px;padding:7px 16px;font-size:.8rem;font-weight:800;cursor:pointer;font-family:Inter,sans-serif}
+.btn-green:hover{opacity:.85}
+.btn-red:hover{background:rgba(248,113,113,.1)}
+.result-box{background:#0b0b18;border:1.5px solid #1e1e3a;border-radius:12px;padding:16px;margin-top:16px}
+.result-name{font-size:1rem;font-weight:800;color:#fff;margin-bottom:4px}
+.result-email{font-size:.8rem;color:#555;margin-bottom:12px}
+.result-saldo span{color:#4ade80;font-weight:800;font-size:1rem}
+.result-uid{font-size:.65rem;color:#333;margin-top:8px;word-break:break-all}
+.msg{padding:12px 16px;border-radius:10px;font-size:.85rem;font-weight:700;margin-top:12px;display:none}
+.msg.show{display:block}
+.msg-success{background:#0a2a10;border:1px solid #4ade80;color:#4ade80}
+.msg-error{background:#2a1010;border:1px solid #f87171;color:#f87171}
+.users-list{margin-top:12px;display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto}
+.user-item{background:#0b0b18;border:1px solid #1e1e3a;border-radius:10px;padding:12px 16px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between}
+.user-item:hover{border-color:#f5c518;background:#0f0f22}
+.user-item-left .name{font-size:.9rem;font-weight:700;color:#fff}
+.user-item-left .email{font-size:.75rem;color:#555}
+.user-item-right{font-size:.85rem;font-weight:800;color:#4ade80;white-space:nowrap}
+.divider{border:none;border-top:1px solid #1e1e3a;margin:20px 0}
+.login-card{background:#13132b;border:1.5px solid #1e1e3a;border-radius:20px;padding:32px}
+.login-card h2{font-size:1rem;font-weight:800;color:#f5c518;margin-bottom:20px}
+#admin-panel{display:none}
+#login-panel{display:block}
+.badge-admin{display:inline-block;background:linear-gradient(135deg,#f5c518,#d4a017);color:#0b0b18;font-size:.65rem;font-weight:900;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;margin-left:8px}
+.saldo-input-wrap{display:flex;gap:8px}
+.saldo-input-wrap input{flex:1}
+.saldo-input-wrap .btn{width:auto;padding:12px 20px;font-size:.85rem}
+.log-list{margin-top:12px;display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto}
+.log-item{font-size:.75rem;padding:8px 12px;background:#0b0b18;border-radius:8px;border-left:3px solid #f5c518;color:#aaa}
+.log-item span{color:#f5c518;font-weight:700}
+.saque-item{background:#0b0b18;border:1px solid #1e1e3a;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.saque-item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.saque-item-info .saque-nome{font-size:.9rem;font-weight:800;color:#fff}
+.saque-item-info .saque-pix{font-size:.78rem;color:#888;margin-top:2px}
+.saque-item-info .saque-data{font-size:.72rem;color:#444;margin-top:2px}
+.saque-item-val{font-size:1.1rem;font-weight:900;color:#f87171;white-space:nowrap}
+.saque-item-actions{display:flex;gap:8px;flex-wrap:wrap}
+.badge-pend{display:inline-block;background:#1a1000;border:1px solid #f5c518;color:#f5c518;font-size:.7rem;font-weight:800;padding:3px 10px;border-radius:20px}
+.saques-list{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.empty-msg{color:#555;font-size:.85rem;padding:16px 0;text-align:center}
+.tabs-admin{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.tab-admin{background:#0b0b18;border:1.5px solid #1e1e3a;border-radius:10px;padding:8px 18px;font-size:.85rem;font-weight:700;color:#888;cursor:pointer;font-family:Inter,sans-serif;transition:all .2s}
+.tab-admin.active{border-color:#f5c518;color:#f5c518;background:#13132b}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+</style>
+</head>
+<body>
+<div class="admin-wrap">
+  <div class="admin-logo">
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px">
+      <img src="https://raspadinhaum7d.online/assets/upload/68e26d2c4d315.png" alt="Raspaetz7" style="height:40px;object-fit:contain"/>
+      <span class="badge-admin">Admin</span>
+    </div>
+    <p>Painel de gerenciamento</p>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="login-panel" class="login-card">
+    <h2>Acesso Restrito</h2>
+    <div class="field">
+      <label>Senha Admin</label>
+      <input type="password" id="admin-senha" placeholder="Digite a senha admin" onkeydown="if(event.key==='Enter')fazerLogin()"/>
+    </div>
+    <button class="btn btn-gold" onclick="fazerLogin()">Entrar</button>
+    <div class="msg msg-error" id="login-erro">Senha incorreta.</div>
+  </div>
+
+  <!-- PAINEL -->
+  <div id="admin-panel">
+    <div class="tabs-admin">
+      <button class="tab-admin active" onclick="abrirTab('tab-usuarios',this)">Usuarios</button>
+      <button class="tab-admin" onclick="abrirTab('tab-depositos',this)">Depositos</button>
+      <button class="tab-admin" onclick="abrirTab('tab-saques',this)">Saques</button>
+      <button class="tab-admin" onclick="abrirTab('tab-afiliados',this)">Afiliados</button>
+      <button class="tab-admin" onclick="abrirTab('tab-log',this)">Log</button>
+      <button class="tab-admin" style="border-color:#f87171;color:#f87171" onclick="abrirTab('tab-limpar',this)">Limpar Dados</button>
+    </div>
+
+    <!-- TAB USUARIOS -->
+    <div class="tab-panel active" id="tab-usuarios">
+      <div class="card">
+        <h2>Buscar Usuario</h2>
+        <div class="field">
+          <label>Nome ou e-mail</label>
+          <input type="text" id="busca-nome" placeholder="Digite o nome..." oninput="buscarUsuarios()"/>
+        </div>
+        <div class="users-list" id="users-list"></div>
+      </div>
+      <div class="card" id="card-usuario" style="display:none">
+        <h2>Usuario Selecionado</h2>
+        <div class="result-box">
+          <div class="result-name" id="res-nome">—</div>
+          <div class="result-email" id="res-email">—</div>
+          <div class="result-saldo">Saldo atual: <span id="res-saldo">R$ 0,00</span></div>
+          <div class="result-uid" id="res-uid"></div>
+        </div>
+        <hr class="divider"/>
+        <h2 style="margin-bottom:16px">Adicionar Creditos</h2>
+        <div class="field">
+          <label>Valor (R$)</label>
+          <div class="saldo-input-wrap">
+            <input type="number" id="valor-credito" placeholder="Ex: 50.00" min="0.01" step="0.01"/>
+            <button class="btn btn-gold" onclick="adicionarCredito()">+ Adicionar</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Motivo (opcional)</label>
+          <input type="text" id="motivo-credito" placeholder="Ex: Deposito manual, bonus, etc."/>
+        </div>
+        <div class="msg" id="credito-msg"></div>
+        <hr class="divider"/>
+        <h2 style="margin-bottom:16px">Remover Creditos</h2>
+        <div class="field">
+          <label>Valor (R$)</label>
+          <div class="saldo-input-wrap">
+            <input type="number" id="valor-debito" placeholder="Ex: 10.00" min="0.01" step="0.01"/>
+            <button class="btn btn-outline btn-sm" onclick="removerCredito()" style="border-color:#f87171;color:#f87171">- Remover</button>
+          </div>
+        </div>
+        <div class="msg" id="debito-msg"></div>
+        <hr class="divider"/>
+        <h2 style="margin-bottom:16px">Bloquear Conta</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn-red btn-sm" onclick="bloquearUsuario()">Bloquear conta</button>
+          <button class="btn-green btn-sm" onclick="desbloquearUsuario()">Desbloquear conta</button>
+        </div>
+        <div class="msg" id="bloqueio-msg"></div>
+      </div>
+    </div>
+
+    <!-- TAB DEPOSITOS -->
+    <div class="tab-panel" id="tab-depositos">
+      <div class="card">
+        <h2>Depositos Pendentes</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+          <button class="btn btn-outline" style="width:auto;padding:8px 20px;font-size:.85rem" onclick="carregarDepositosPendentes()">Atualizar lista</button>
+          <button class="btn btn-outline" style="width:auto;padding:8px 20px;font-size:.85rem" onclick="exportarCSV('depositos')">Exportar CSV</button>
+        </div>
+        <div class="saques-list" id="depositos-pendentes-list"><div class="empty-msg">Carregando...</div></div>
+      </div>
+    </div>
+
+    <!-- TAB SAQUES -->
+    <div class="tab-panel" id="tab-saques">
+      <div class="card">
+        <h2>Saques Pendentes</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+          <button class="btn btn-outline" style="width:auto;padding:8px 20px;font-size:.85rem" onclick="carregarSaquesPendentes()">Atualizar lista</button>
+          <button class="btn btn-outline" style="width:auto;padding:8px 20px;font-size:.85rem" onclick="exportarCSV('saques')">Exportar CSV</button>
+        </div>
+        <div class="saques-list" id="saques-pendentes-list"><div class="empty-msg">Carregando...</div></div>
+      </div>
+    </div>
+
+    <!-- TAB AFILIADOS -->
+    <div class="tab-panel" id="tab-afiliados">
+      <!-- Stats globais -->
+      <div class="card">
+        <h2>Visao Geral — Programa de Afiliados</h2>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px" id="afil-stats-global">
+          <div style="background:#0b0b18;border:1px solid #1e1e3a;border-radius:12px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:900;color:#f5c518" id="gs-afiliados">0</div><div style="font-size:.65rem;color:#666;text-transform:uppercase;margin-top:4px">Afiliados</div></div>
+          <div style="background:#0b0b18;border:1px solid #1e1e3a;border-radius:12px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:900;color:#f5c518" id="gs-indicados">0</div><div style="font-size:.65rem;color:#666;text-transform:uppercase;margin-top:4px">Indicados</div></div>
+          <div style="background:#0b0b18;border:1px solid #1e1e3a;border-radius:12px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:900;color:#4ade80" id="gs-depositado">R$ 0</div><div style="font-size:.65rem;color:#666;text-transform:uppercase;margin-top:4px">Total Depositado</div></div>
+          <div style="background:#0b0b18;border:1px solid #1e1e3a;border-radius:12px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:900;color:#f87171" id="gs-comissao">R$ 0</div><div style="font-size:.65rem;color:#666;text-transform:uppercase;margin-top:4px">Comissoes (70%)</div></div>
+        </div>
+        <button class="btn btn-outline" style="width:auto;padding:8px 20px;font-size:.85rem" onclick="carregarAfiliados()">Atualizar</button>
+      </div>
+      <!-- Lista afiliados -->
+      <div class="card">
+        <h2>Todos os Afiliados</h2>
+        <div id="afiliados-list"><div class="empty-msg">Clique em "Atualizar" para carregar.</div></div>
+      </div>
+      <!-- Saques de comissao pendentes -->
+      <div class="card">
+        <h2>Saques de Comissao Pendentes</h2>
+        <button class="btn btn-outline" style="width:auto;padding:8px 20px;font-size:.85rem;margin-bottom:16px" onclick="carregarSaquesComissao()">Atualizar</button>
+        <div id="saques-comissao-list"><div class="empty-msg">Clique em "Atualizar" para carregar.</div></div>
+      </div>
+    </div>
+
+    <!-- TAB LOG -->
+    <div class="tab-panel" id="tab-log">
+      <div class="card">
+        <h2>Log desta sessao</h2>
+        <div class="log-list" id="log-list"><div class="empty-msg">Nenhuma acao ainda.</div></div>
+      </div>
+    </div>
+
+    <!-- TAB LIMPAR DADOS -->
+    <div class="tab-panel" id="tab-limpar">
+      <div class="card">
+        <h2 style="color:#f87171">Limpar Dados</h2>
+        <p style="color:#888;font-size:.85rem;margin-bottom:20px">Remove registros do Firestore. <strong style="color:#f87171">Acao irreversivel.</strong></p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="background:#0b0b18;border:1px solid #1e1e3a;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div><div style="font-size:.9rem;font-weight:800;color:#fff">Transacoes</div><div style="font-size:.75rem;color:#555;margin-top:2px">Historico de jogos, creditos e debitos</div></div>
+            <button class="btn-red btn-sm" onclick="limparColecao('transacoes')">Limpar</button>
+          </div>
+          <div style="background:#0b0b18;border:1px solid #1e1e3a;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div><div style="font-size:.9rem;font-weight:800;color:#fff">Depositos</div><div style="font-size:.75rem;color:#555;margin-top:2px">Todos os registros de deposito</div></div>
+            <button class="btn-red btn-sm" onclick="limparColecao('depositos')">Limpar</button>
+          </div>
+          <div style="background:#0b0b18;border:1px solid #1e1e3a;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div><div style="font-size:.9rem;font-weight:800;color:#fff">Saques</div><div style="font-size:.75rem;color:#555;margin-top:2px">Todos os registros de saque</div></div>
+            <button class="btn-red btn-sm" onclick="limparColecao('saques')">Limpar</button>
+          </div>
+          <div style="background:#0b0b18;border:1px solid #1e1e3a;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div><div style="font-size:.9rem;font-weight:800;color:#fff">Resetar stats dos usuarios</div><div style="font-size:.75rem;color:#555;margin-top:2px">Zera jogadas, ganhos e gastos (nao apaga contas nem saldo)</div></div>
+            <button class="btn-red btn-sm" onclick="resetarStats()">Resetar</button>
+          </div>
+        </div>
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid #2a1010">
+          <div style="font-size:.85rem;font-weight:800;color:#f87171;margin-bottom:12px">Limpar tudo de uma vez</div>
+          <button onclick="limparTudo()" style="width:100%;padding:14px;background:rgba(248,113,113,.1);border:2px solid #f87171;border-radius:12px;color:#f87171;font-size:.95rem;font-weight:900;cursor:pointer;font-family:Inter,sans-serif">
+            Limpar TUDO (transacoes + depositos + saques + stats)
+          </button>
+        </div>
+        <div class="msg" id="limpar-msg" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+    <button class="btn btn-outline" onclick="sair()" style="width:100%">Sair do Admin</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, addDoc, deleteDoc, serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const app = initializeApp({apiKey:"AIzaSyCXB1Y1dqo0nCiNUEJ5eBwVNRUp2RIEqHk",authDomain:"raspa-979d4.firebaseapp.com",projectId:"raspa-979d4",storageBucket:"raspa-979d4.firebasestorage.app",messagingSenderId:"686362667379",appId:"1:686362667379:web:d7d72dd87129818ee2bd06"});
+const db = getFirestore(app);
+const SENHA = "raspaetz7admin";
+const fmt = v => Number(v).toFixed(2).replace('.', ',');
+const fmtData = ts => { if(!ts) return '—'; const d=ts.toDate?ts.toDate():new Date(ts); return d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); };
+
+let todosUsuarios = [], usuarioSelecionado = null, sessionLog = [];
+
+// ===== LOGIN =====
+window.fazerLogin = function() {
+  const s = document.getElementById('admin-senha').value;
+  if (s === SENHA) {
+    document.getElementById('login-panel').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    carregarTodosUsuarios();
+    carregarDepositosPendentes();
+    carregarSaquesPendentes();
+  } else {
+    const el = document.getElementById('login-erro');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 3000);
+  }
+};
+
+window.sair = function() {
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('login-panel').style.display = 'block';
+  document.getElementById('admin-senha').value = '';
+  todosUsuarios = []; usuarioSelecionado = null; sessionLog = [];
+  document.getElementById('users-list').innerHTML = '';
+  document.getElementById('card-usuario').style.display = 'none';
+};
+
+window.abrirTab = function(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-admin').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'tab-saques') carregarSaquesPendentes();
+  if (id === 'tab-depositos') carregarDepositosPendentes();
+  if (id === 'tab-afiliados') { carregarAfiliados(); carregarSaquesComissao(); }
+};
+
+// ===== USUARIOS =====
+async function carregarTodosUsuarios() {
+  try {
+    const snap = await getDocs(collection(db, 'usuarios'));
+    todosUsuarios = [];
+    snap.forEach(d => todosUsuarios.push({ uid: d.id, ...d.data() }));
+  } catch(e) { console.error(e); }
+}
+
+window.buscarUsuarios = function() {
+  const termo = document.getElementById('busca-nome').value.trim().toLowerCase();
+  const lista = document.getElementById('users-list');
+  lista.innerHTML = '';
+  if (!termo || termo.length < 2) return;
+  const filtrados = todosUsuarios.filter(u =>
+    (u.nome||'').toLowerCase().includes(termo) || (u.email||'').toLowerCase().includes(termo)
+  );
+  if (!filtrados.length) { lista.innerHTML = '<div style="color:#555;font-size:.8rem;padding:8px">Nenhum usuario encontrado.</div>'; return; }
+  filtrados.slice(0,10).forEach(u => {
+    const item = document.createElement('div');
+    item.className = 'user-item';
+    item.innerHTML = `<div class="user-item-left"><div class="name">${u.nome||'(sem nome)'}</div><div class="email">${u.email||''}</div></div><div class="user-item-right">R$ ${fmt(u.saldo||0)}</div>`;
+    item.onclick = () => selecionarUsuario(u);
+    lista.appendChild(item);
+  });
+};
+
+function selecionarUsuario(u) {
+  usuarioSelecionado = u;
+  document.getElementById('res-nome').textContent = u.nome || '(sem nome)';
+  document.getElementById('res-email').textContent = u.email || '';
+  document.getElementById('res-saldo').textContent = 'R$ ' + fmt(u.saldo || 0);
+  document.getElementById('res-uid').textContent = 'UID: ' + u.uid;
+  document.getElementById('card-usuario').style.display = 'block';
+  document.getElementById('valor-credito').value = '';
+  document.getElementById('valor-debito').value = '';
+  document.getElementById('motivo-credito').value = '';
+  esconderMsg('credito-msg'); esconderMsg('debito-msg'); esconderMsg('bloqueio-msg');
+  document.getElementById('card-usuario').scrollIntoView({ behavior: 'smooth' });
+}
+
+window.adicionarCredito = async function() {
+  if (!usuarioSelecionado) return;
+  const val = parseFloat(document.getElementById('valor-credito').value);
+  const motivo = document.getElementById('motivo-credito').value.trim() || 'Credito manual admin';
+  if (!val || val <= 0) { mostrarMsg('credito-msg', 'Informe um valor valido.', 'error'); return; }
+  try {
+    const ref = doc(db, 'usuarios', usuarioSelecionado.uid);
+    const snap = await getDoc(ref);
+    const saldoAtual = snap.exists() ? (snap.data().saldo || 0) : 0;
+    const novoSaldo = saldoAtual + val;
+    await updateDoc(ref, { saldo: novoSaldo, totalDepositado: (snap.data().totalDepositado||0) + val });
+    await addDoc(collection(db, 'transacoes'), { uid: usuarioSelecionado.uid, tipo: 'credito_admin', valor: val, motivo, saldoAntes: saldoAtual, saldoDepois: novoSaldo, criadoEm: serverTimestamp() });
+    usuarioSelecionado.saldo = novoSaldo;
+    const idx = todosUsuarios.findIndex(u => u.uid === usuarioSelecionado.uid);
+    if (idx >= 0) todosUsuarios[idx].saldo = novoSaldo;
+    document.getElementById('res-saldo').textContent = 'R$ ' + fmt(novoSaldo);
+    mostrarMsg('credito-msg', 'R$ '+fmt(val)+' adicionado! Novo saldo: R$ '+fmt(novoSaldo), 'success');
+    document.getElementById('valor-credito').value = '';
+    log('+R$ '+fmt(val)+' para '+usuarioSelecionado.nome+' — '+motivo);
+  } catch(e) { mostrarMsg('credito-msg', 'Erro: '+e.message, 'error'); }
+};
+
+window.removerCredito = async function() {
+  if (!usuarioSelecionado) return;
+  const val = parseFloat(document.getElementById('valor-debito').value);
+  if (!val || val <= 0) { mostrarMsg('debito-msg', 'Informe um valor valido.', 'error'); return; }
+  try {
+    const ref = doc(db, 'usuarios', usuarioSelecionado.uid);
+    const snap = await getDoc(ref);
+    const saldoAtual = snap.exists() ? (snap.data().saldo || 0) : 0;
+    if (val > saldoAtual) { mostrarMsg('debito-msg', 'Saldo insuficiente. Atual: R$ '+fmt(saldoAtual), 'error'); return; }
+    const novoSaldo = saldoAtual - val;
+    await updateDoc(ref, { saldo: novoSaldo });
+    await addDoc(collection(db, 'transacoes'), { uid: usuarioSelecionado.uid, tipo: 'debito_admin', valor: -val, motivo: 'Remocao manual admin', saldoAntes: saldoAtual, saldoDepois: novoSaldo, criadoEm: serverTimestamp() });
+    usuarioSelecionado.saldo = novoSaldo;
+    const idx = todosUsuarios.findIndex(u => u.uid === usuarioSelecionado.uid);
+    if (idx >= 0) todosUsuarios[idx].saldo = novoSaldo;
+    document.getElementById('res-saldo').textContent = 'R$ ' + fmt(novoSaldo);
+    mostrarMsg('debito-msg', 'R$ '+fmt(val)+' removido! Novo saldo: R$ '+fmt(novoSaldo), 'success');
+    document.getElementById('valor-debito').value = '';
+    log('-R$ '+fmt(val)+' de '+usuarioSelecionado.nome);
+  } catch(e) { mostrarMsg('debito-msg', 'Erro: '+e.message, 'error'); }
+};
+
+window.bloquearUsuario = async function() {
+  if (!usuarioSelecionado || !confirm('Bloquear a conta de '+usuarioSelecionado.nome+'?')) return;
+  try {
+    await updateDoc(doc(db, 'usuarios', usuarioSelecionado.uid), { bloqueado: true });
+    mostrarMsg('bloqueio-msg', 'Conta bloqueada.', 'error');
+    log('Conta bloqueada: '+usuarioSelecionado.nome);
+  } catch(e) { mostrarMsg('bloqueio-msg', 'Erro: '+e.message, 'error'); }
+};
+
+window.desbloquearUsuario = async function() {
+  if (!usuarioSelecionado) return;
+  try {
+    await updateDoc(doc(db, 'usuarios', usuarioSelecionado.uid), { bloqueado: false });
+    mostrarMsg('bloqueio-msg', 'Conta desbloqueada.', 'success');
+    log('Conta desbloqueada: '+usuarioSelecionado.nome);
+  } catch(e) { mostrarMsg('bloqueio-msg', 'Erro: '+e.message, 'error'); }
+};
+
+// ===== DEPOSITOS =====
+window.carregarDepositosPendentes = async function() {
+  const lista = document.getElementById('depositos-pendentes-list');
+  lista.innerHTML = '<div class="empty-msg">Carregando...</div>';
+  try {
+    const snap = await getDocs(query(collection(db, 'depositos'), where('status','==','pendente')));
+    if (snap.empty) { lista.innerHTML = '<div class="empty-msg">Nenhum deposito pendente.</div>'; return; }
+    const docs = snap.docs.sort((a,b) => ((a.data().criadoEm?.seconds||0)-(b.data().criadoEm?.seconds||0)));
+    lista.innerHTML = '';
+    docs.forEach(d => {
+      const s = d.data();
+      const div = document.createElement('div');
+      div.className = 'saque-item'; div.id = 'dep-'+d.id;
+      div.innerHTML = `<div class="saque-item-top"><div class="saque-item-info"><div class="saque-nome">${s.nome||s.email||s.uid}</div><div class="saque-pix">PIX · UID: ${s.uid}</div><div class="saque-data">${fmtData(s.criadoEm)}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><div class="saque-item-val" style="color:#4ade80">+R$ ${fmt(s.valor)}</div><span class="badge-pend">Pendente</span></div></div><div class="saque-item-actions"><button class="btn-green" onclick="aprovarDeposito('${d.id}','${s.uid}',${s.valor})">Aprovar e Creditar</button><button class="btn-red" onclick="recusarDeposito('${d.id}')">Recusar</button></div>`;
+      lista.appendChild(div);
+    });
+  } catch(e) { lista.innerHTML = '<div class="empty-msg">Erro: '+e.message+'</div>'; }
+};
+
+window.aprovarDeposito = async function(depId, uid, valor) {
+  if (!confirm('Aprovar deposito de R$ '+fmt(valor)+' e creditar saldo?')) return;
+  try {
+    await updateDoc(doc(db, 'depositos', depId), { status: 'aprovado', aprovadoEm: serverTimestamp() });
+    const ref = doc(db, 'usuarios', uid);
+    const snap = await getDoc(ref);
+    const saldoAtual = snap.exists() ? (snap.data().saldo||0) : 0;
+    const novoSaldo = saldoAtual + valor;
+    await updateDoc(ref, { saldo: novoSaldo, totalDepositado: (snap.data()?.totalDepositado||0)+valor });
+    await addDoc(collection(db, 'transacoes'), { uid, tipo: 'deposito_aprovado', valor, saldoAntes: saldoAtual, saldoDepois: novoSaldo, criadoEm: serverTimestamp() });
+    const el = document.getElementById('dep-'+depId);
+    if (el) el.innerHTML = `<div style="color:#4ade80;font-size:.85rem;font-weight:700;padding:8px 0">Aprovado. Novo saldo: R$ ${fmt(novoSaldo)}</div>`;
+    log('Deposito aprovado: R$ '+fmt(valor)+' para UID '+uid);
+  } catch(e) { alert('Erro: '+e.message); }
+};
+
+window.recusarDeposito = async function(depId) {
+  if (!confirm('Recusar este deposito?')) return;
+  try {
+    await updateDoc(doc(db, 'depositos', depId), { status: 'recusado', recusadoEm: serverTimestamp() });
+    const el = document.getElementById('dep-'+depId);
+    if (el) el.innerHTML = `<div style="color:#f87171;font-size:.85rem;font-weight:700;padding:8px 0">Deposito recusado.</div>`;
+    log('Deposito recusado: ID '+depId);
+  } catch(e) { alert('Erro: '+e.message); }
+};
+
+// ===== SAQUES =====
+window.carregarSaquesPendentes = async function() {
+  const lista = document.getElementById('saques-pendentes-list');
+  lista.innerHTML = '<div class="empty-msg">Carregando...</div>';
+  try {
+    const snap = await getDocs(query(collection(db, 'saques'), where('status','==','pendente')));
+    if (snap.empty) { lista.innerHTML = '<div class="empty-msg">Nenhum saque pendente.</div>'; return; }
+    const docs = snap.docs.sort((a,b) => ((a.data().criadoEm?.seconds||0)-(b.data().criadoEm?.seconds||0)));
+    const uids = [...new Set(docs.map(d => d.data().uid))];
+    const nomes = {};
+    await Promise.all(uids.map(async uid => {
+      try { const u = await getDoc(doc(db,'usuarios',uid)); nomes[uid] = u.exists()?(u.data().nome||u.data().email||uid):uid; } catch(e) { nomes[uid]=uid; }
+    }));
+    lista.innerHTML = '';
+    docs.forEach(d => {
+      const s = d.data();
+      const div = document.createElement('div');
+      div.className = 'saque-item'; div.id = 'saque-'+d.id;
+      div.innerHTML = `<div class="saque-item-top"><div class="saque-item-info"><div class="saque-nome">${nomes[s.uid]||s.uid}</div><div class="saque-pix">PIX: ${s.pixChave||'—'} (${s.tipoPix||'—'})</div><div class="saque-data">${fmtData(s.criadoEm)}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><div class="saque-item-val">-R$ ${fmt(s.valor)}</div><span class="badge-pend">Pendente</span></div></div><div class="saque-item-actions"><button class="btn-green" onclick="aprovarSaque('${d.id}','${s.uid}',${s.valor})">Aprovar</button><button class="btn-red" onclick="recusarSaque('${d.id}','${s.uid}',${s.valor})">Recusar</button></div>`;
+      lista.appendChild(div);
+    });
+  } catch(e) { lista.innerHTML = '<div class="empty-msg">Erro: '+e.message+'</div>'; }
+};
+
+window.aprovarSaque = async function(saqueId, uid, valor) {
+  if (!confirm('Aprovar saque de R$ '+fmt(valor)+'?')) return;
+  try {
+    await updateDoc(doc(db, 'saques', saqueId), { status: 'aprovado', aprovadoEm: serverTimestamp() });
+    const el = document.getElementById('saque-'+saqueId);
+    if (el) el.innerHTML = `<div style="color:#4ade80;font-size:.85rem;font-weight:700;padding:8px 0">Saque aprovado.</div>`;
+    log('Saque aprovado: R$ '+fmt(valor)+' para UID '+uid);
+  } catch(e) { alert('Erro: '+e.message); }
+};
+
+window.recusarSaque = async function(saqueId, uid, valor) {
+  if (!confirm('Recusar saque de R$ '+fmt(valor)+' e devolver saldo?')) return;
+  try {
+    await updateDoc(doc(db, 'saques', saqueId), { status: 'recusado', recusadoEm: serverTimestamp() });
+    const ref = doc(db, 'usuarios', uid);
+    const snap = await getDoc(ref);
+    const saldoAtual = snap.exists() ? (snap.data().saldo||0) : 0;
+    const novoSaldo = saldoAtual + valor;
+    await updateDoc(ref, { saldo: novoSaldo });
+    await addDoc(collection(db, 'transacoes'), { uid, tipo: 'estorno_saque', valor, motivo: 'Saque recusado', saldoAntes: saldoAtual, saldoDepois: novoSaldo, criadoEm: serverTimestamp() });
+    const el = document.getElementById('saque-'+saqueId);
+    if (el) el.innerHTML = `<div style="color:#f87171;font-size:.85rem;font-weight:700;padding:8px 0">Saque recusado. Saldo devolvido.</div>`;
+    log('Saque recusado: R$ '+fmt(valor)+' devolvido para UID '+uid);
+  } catch(e) { alert('Erro: '+e.message); }
+};
+
+// ===== AFILIADOS =====
+window.carregarAfiliados = async function() {
+  const lista = document.getElementById('afiliados-list');
+  lista.innerHTML = '<div class="empty-msg">Carregando...</div>';
+  try {
+    const snap = await getDocs(collection(db, 'usuarios'));
+    const todos = []; snap.forEach(d => todos.push({ uid: d.id, ...d.data() }));
+    const nomeMap = {}; todos.forEach(u => { nomeMap[u.uid] = u.nome||u.email||u.uid; });
+
+    // Build affiliate map
+    const afilMap = {};
+    todos.forEach(u => {
+      if (u.refBy) {
+        if (!afilMap[u.refBy]) afilMap[u.refBy] = [];
+        afilMap[u.refBy].push(u);
+      }
+    });
+    const afilUids = Object.keys(afilMap);
+
+    // Global stats
+    let totalIndicados = 0, totalDep = 0;
+    afilUids.forEach(uid => {
+      const ind = afilMap[uid];
+      totalIndicados += ind.length;
+      ind.forEach(u => { totalDep += (u.totalDepositado||0); });
+    });
+    document.getElementById('gs-afiliados').textContent = afilUids.length;
+    document.getElementById('gs-indicados').textContent = totalIndicados;
+    document.getElementById('gs-depositado').textContent = 'R$ ' + fmt(totalDep);
+    document.getElementById('gs-comissao').textContent = 'R$ ' + fmt(totalDep * 0.70);
+
+    if (!afilUids.length) { lista.innerHTML = '<div class="empty-msg">Nenhum afiliado com indicacoes ainda.</div>'; return; }
+
+    // Sort by most indicados
+    afilUids.sort((a,b) => afilMap[b].length - afilMap[a].length);
+
+    lista.innerHTML = '';
+    afilUids.forEach(afilUid => {
+      const indicados = afilMap[afilUid];
+      const ativos = indicados.filter(u => (u.jogadas||0) > 0).length;
+      const depTotal = indicados.reduce((s,u) => s+(u.totalDepositado||0), 0);
+      const comissao = depTotal * 0.70;
+      const div = document.createElement('div');
+      div.style.cssText = 'background:#0b0b18;border:1px solid #1e1e3a;border-radius:14px;padding:18px;margin-bottom:12px';
+      div.innerHTML = `
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px">
+          <div>
+            <div style="font-size:.95rem;font-weight:800;color:#fff">${nomeMap[afilUid]||afilUid}</div>
+            <div style="font-size:.72rem;color:#555;margin-top:2px">UID: ${afilUid}</div>
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <div style="text-align:center"><div style="font-size:1.2rem;font-weight:900;color:#f5c518">${indicados.length}</div><div style="font-size:.65rem;color:#666;text-transform:uppercase">Cadastros</div></div>
+            <div style="text-align:center"><div style="font-size:1.2rem;font-weight:900;color:#4ade80">${ativos}</div><div style="font-size:.65rem;color:#666;text-transform:uppercase">Ativos</div></div>
+            <div style="text-align:center"><div style="font-size:1.2rem;font-weight:900;color:#60a5fa">R$ ${fmt(depTotal)}</div><div style="font-size:.65rem;color:#666;text-transform:uppercase">Depositado</div></div>
+            <div style="text-align:center"><div style="font-size:1.2rem;font-weight:900;color:#f87171">R$ ${fmt(comissao)}</div><div style="font-size:.65rem;color:#666;text-transform:uppercase">Comissao</div></div>
+          </div>
+        </div>
+        <details style="cursor:pointer">
+          <summary style="font-size:.8rem;color:#888;font-weight:700;list-style:none;padding:6px 0;border-top:1px solid #1e1e3a">&#9654; Ver indicados (${indicados.length})</summary>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+            ${indicados.map(u => {
+              const dep = u.totalDepositado||0;
+              const com = dep*0.70;
+              const nome = u.nome||u.email||'Usuario';
+              const mascarado = nome.length>3?nome.substring(0,3)+'***':nome;
+              return '<div style="display:flex;align-items:center;justify-content:space-between;background:#13132b;border-radius:8px;padding:8px 12px;font-size:.8rem"><div><span style="color:#ccc;font-weight:700">'+mascarado+'</span><span style="color:#555;margin-left:8px">'+(u.jogadas||0)+' jogadas</span></div><div style="text-align:right"><span style="color:#4ade80;font-weight:800">dep: R$ '+fmt(dep)+'</span><span style="color:#f87171;font-weight:800;margin-left:10px">com: R$ '+fmt(com)+'</span></div></div>';
+            }).join('')}
+          </div>
+        </details>`;
+      lista.appendChild(div);
+    });
+  } catch(e) { lista.innerHTML = '<div class="empty-msg">Erro: '+e.message+'</div>'; }
+};
+
+window.carregarSaquesComissao = async function() {
+  const lista = document.getElementById('saques-comissao-list');
+  lista.innerHTML = '<div class="empty-msg">Carregando...</div>';
+  try {
+    const snap = await getDocs(query(collection(db, 'saques'), where('tipo','==','comissao'), where('status','==','pendente')));
+    if (snap.empty) { lista.innerHTML = '<div class="empty-msg">Nenhum saque de comissao pendente.</div>'; return; }
+    const docs = snap.docs.sort((a,b) => (a.data().criadoEm?.seconds||0)-(b.data().criadoEm?.seconds||0));
+    const uids = [...new Set(docs.map(d => d.data().uid))];
+    const nomes = {};
+    await Promise.all(uids.map(async uid => {
+      try { const u = await getDoc(doc(db,'usuarios',uid)); nomes[uid]=u.exists()?(u.data().nome||u.data().email||uid):uid; } catch(e){nomes[uid]=uid;}
+    }));
+    lista.innerHTML = '';
+    docs.forEach(d => {
+      const s = d.data();
+      const div = document.createElement('div');
+      div.className = 'saque-item'; div.id = 'scom-'+d.id;
+      div.innerHTML = '<div class="saque-item-top"><div class="saque-item-info"><div class="saque-nome">'+(nomes[s.uid]||s.uid)+' <span style="font-size:.7rem;background:#f5c51822;color:#f5c518;border:1px solid #f5c51844;padding:2px 8px;border-radius:20px;font-weight:800">Comissao</span></div><div class="saque-pix">PIX: '+(s.pixChave||'—')+'</div><div class="saque-data">'+fmtData(s.criadoEm)+'</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><div class="saque-item-val" style="color:#f5c518">R$ '+fmt(s.valor)+'</div><span class="badge-pend">Pendente</span></div></div><div class="saque-item-actions"><button class="btn-green" onclick="aprovarSaqueComissao(\''+d.id+'\',\''+s.uid+'\','+s.valor+')">Aprovar</button><button class="btn-red" onclick="recusarSaqueComissao(\''+d.id+'\')">Recusar</button></div>';
+      lista.appendChild(div);
+    });
+  } catch(e) { lista.innerHTML = '<div class="empty-msg">Erro: '+e.message+'</div>'; }
+};
+
+window.aprovarSaqueComissao = async function(id, uid, valor) {
+  if (!confirm('Aprovar saque de comissao de R$ '+fmt(valor)+'?')) return;
+  try {
+    await updateDoc(doc(db,'saques',id), { status:'aprovado', aprovadoEm: serverTimestamp() });
+    const el = document.getElementById('scom-'+id);
+    if (el) el.innerHTML = '<div style="color:#4ade80;font-size:.85rem;font-weight:700;padding:8px 0">Saque de comissao aprovado.</div>';
+    log('Saque comissao aprovado: R$ '+fmt(valor)+' para UID '+uid);
+  } catch(e) { alert('Erro: '+e.message); }
+};
+
+window.recusarSaqueComissao = async function(id) {
+  if (!confirm('Recusar este saque de comissao?')) return;
+  try {
+    await updateDoc(doc(db,'saques',id), { status:'recusado', recusadoEm: serverTimestamp() });
+    const el = document.getElementById('scom-'+id);
+    if (el) el.innerHTML = '<div style="color:#f87171;font-size:.85rem;font-weight:700;padding:8px 0">Saque de comissao recusado.</div>';
+    log('Saque comissao recusado: ID '+id);
+  } catch(e) { alert('Erro: '+e.message); }
+};
+// ===== CSV EXPORT =====
+window.exportarCSV = async function(tipo) {
+  try {
+    const snap = await getDocs(collection(db, tipo));
+    if (snap.empty) { alert('Nenhum registro para exportar.'); return; }
+    const header = tipo === 'depositos' ? 'ID;UID;Nome;Email;Valor;Status;Data' : 'ID;UID;PIX;TipoPIX;Valor;Status;Data';
+    const rows = snap.docs.map(d => {
+      const s = d.data();
+      const dt = s.criadoEm ? (s.criadoEm.toDate ? s.criadoEm.toDate().toLocaleString('pt-BR') : '') : '';
+      if (tipo === 'depositos') return [d.id, s.uid||'', s.nome||'', s.email||'', s.valor||0, s.status||'', dt].join(';');
+      return [d.id, s.uid||'', s.pixChave||'', s.tipoPix||'', s.valor||0, s.status||'', dt].join(';');
+    });
+    const blob = new Blob([header+'\n'+rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = tipo+'_'+new Date().toISOString().slice(0,10)+'.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    log('CSV exportado: '+tipo);
+  } catch(e) { alert('Erro ao exportar: '+e.message); }
+};
+
+// ===== LIMPAR DADOS =====
+async function deletarColecao(nome) {
+  const snap = await getDocs(collection(db, nome));
+  await Promise.all(snap.docs.map(d => deleteDoc(doc(db, nome, d.id))));
+  return snap.size;
+}
+
+window.limparColecao = async function(nome) {
+  if (!confirm('Apagar TODOS os registros de "'+nome+'"? Irreversivel.')) return;
+  const msg = document.getElementById('limpar-msg');
+  msg.className = 'msg show'; msg.textContent = 'Apagando '+nome+'...';
+  try {
+    const total = await deletarColecao(nome);
+    msg.className = 'msg msg-success show'; msg.textContent = total+' registros de "'+nome+'" apagados.';
+    log('Colecao "'+nome+'" limpa: '+total+' registros.');
+  } catch(e) { msg.className = 'msg msg-error show'; msg.textContent = 'Erro: '+e.message; }
+};
+
+window.resetarStats = async function() {
+  if (!confirm('Resetar jogadas, ganhos e gastos de TODOS os usuarios?')) return;
+  const msg = document.getElementById('limpar-msg');
+  msg.className = 'msg show'; msg.textContent = 'Resetando...';
+  try {
+    const snap = await getDocs(collection(db, 'usuarios'));
+    await Promise.all(snap.docs.map(d => updateDoc(doc(db,'usuarios',d.id), { jogadas:0, totalGanho:0, totalGasto:0, cashbackPago:0 })));
+    msg.className = 'msg msg-success show'; msg.textContent = snap.size+' usuarios resetados.';
+    log('Stats de '+snap.size+' usuarios resetados.');
+  } catch(e) { msg.className = 'msg msg-error show'; msg.textContent = 'Erro: '+e.message; }
+};
+
+window.limparTudo = async function() {
+  if (!confirm('Apagar TODAS as transacoes, depositos, saques e resetar stats?')) return;
+  if (!confirm('Tem certeza absoluta? Irreversivel.')) return;
+  const msg = document.getElementById('limpar-msg');
+  msg.className = 'msg show'; msg.textContent = 'Limpando tudo...';
+  try {
+    const [t, d, s] = await Promise.all([deletarColecao('transacoes'), deletarColecao('depositos'), deletarColecao('saques')]);
+    const snap = await getDocs(collection(db, 'usuarios'));
+    await Promise.all(snap.docs.map(u => updateDoc(doc(db,'usuarios',u.id), { jogadas:0, totalGanho:0, totalGasto:0, cashbackPago:0 })));
+    msg.className = 'msg msg-success show';
+    msg.textContent = 'Concluido: '+t+' transacoes, '+d+' depositos, '+s+' saques removidos. '+snap.size+' usuarios resetados.';
+    log('LIMPEZA TOTAL executada.');
+  } catch(e) { msg.className = 'msg msg-error show'; msg.textContent = 'Erro: '+e.message; }
+};
+
+// ===== HELPERS =====
+function mostrarMsg(id, texto, tipo) {
+  const el = document.getElementById(id);
+  el.textContent = texto;
+  el.className = 'msg msg-'+tipo+' show';
+  setTimeout(() => el.classList.remove('show'), 5000);
+}
+function esconderMsg(id) { document.getElementById(id).className = 'msg'; }
+function log(texto) {
+  sessionLog.unshift({ texto, hora: new Date().toLocaleTimeString('pt-BR') });
+  const lista = document.getElementById('log-list');
+  lista.innerHTML = sessionLog.map(l => `<div class="log-item"><span>${l.hora}</span> — ${l.texto}</div>`).join('');
+}
+</script>
+</body>
+</html>

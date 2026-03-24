@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raspaetz7 - Depositar</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><img src="https://raspadinhaum7d.online/assets/upload/68e26d2c4d315.png" alt="Raspaetz7"/></a>
+    <div class="nav-user">
+      <div class="nav-saldo-wrap">
+        <span class="nav-saldo-label">Saldo</span>
+        <span class="nav-saldo-val">R$ <span id="nav-saldo-val">0,00</span></span>
+      </div>
+      <a href="dashboard.html" class="btn btn-outline">Voltar</a>
+    </div>
+  </div>
+</nav>
+
+<div class="pag-wrap">
+
+  <!-- STEP 1: Valor -->
+  <div class="pag-card" id="step1">
+    <div class="pag-header">
+      <div class="pag-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+      <h2>Fazer Depósito via PIX</h2>
+      <p>Escolha o valor e pague instantaneamente</p>
+    </div>
+
+    <div class="bonus-banner">
+      <div class="bonus-banner-left">
+        <span class="bonus-tag-big">BÔNUS</span>
+        <div><strong>100% no primeiro depósito!</strong><span>Deposite R$ 50 e jogue com R$ 100</span></div>
+      </div>
+      <div class="bonus-pct">+100%</div>
+    </div>
+
+    <div class="valor-rapido-label">Valores rápidos</div>
+    <div class="valores-rapidos">
+      <button class="vr-btn" onclick="setValor(10,this)">R$ 10</button>
+      <button class="vr-btn" onclick="setValor(20,this)">R$ 20</button>
+      <button class="vr-btn" onclick="setValor(50,this)">R$ 50 <span class="vr-tag">+bônus</span></button>
+      <button class="vr-btn" onclick="setValor(100,this)">R$ 100</button>
+      <button class="vr-btn" onclick="setValor(200,this)">R$ 200</button>
+      <button class="vr-btn" onclick="setValor(500,this)">R$ 500</button>
+      <button class="vr-btn" onclick="setValor(1000,this)">R$ 1.000</button>
+    </div>
+
+    <div class="field-group" style="margin-top:20px">
+      <label>Ou digite o valor</label>
+      <div class="field-wrap valor-input-wrap">
+        <span class="valor-prefix">R$</span>
+        <input type="number" id="input-valor" placeholder="0,00" min="10" max="5000"/>
+      </div>
+      <small style="color:#555;font-size:.78rem">Mínimo: R$ 10,00 · Máximo: R$ 5.000,00</small>
+    </div>
+
+    <button class="btn-pag" id="btn-continuar" onclick="continuar()">Continuar</button>
+  </div>
+
+  <!-- STEP 2: PIX -->
+  <div class="pag-card hidden" id="step2-pix">
+    <div class="pag-header">
+      <div class="pag-icon pag-icon-green"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg></div>
+      <h2>PIX Gerado!</h2>
+      <p>Copie a chave e pague no seu banco</p>
+    </div>
+    <div class="pix-valor-destaque">Valor a pagar: <strong id="pix-valor-show">R$ 0,00</strong></div>
+    <div class="pix-box">
+      <div class="pix-box-header"><span>Chave PIX (E-mail)</span><span class="pix-tipo-badge">E-mail</span></div>
+      <div class="pix-chave-row">
+        <span class="pix-chave-val">joaovicctor1105@gmail.com</span>
+        <button class="btn-copiar" id="btn-copiar" onclick="copiarPix()">Copiar</button>
+      </div>
+    </div>
+    <div class="pix-dados">
+      <div class="pix-dado-row"><span>Favorecido</span><span>João Victor</span></div>
+      <div class="pix-dado-row"><span>Valor</span><span id="pix-dado-valor" style="color:#4ade80;font-weight:800">R$ 0,00</span></div>
+      <div class="pix-dado-row"><span>Tipo</span><span>PIX Instantâneo</span></div>
+    </div>
+    <div class="pix-steps">
+      <div class="pix-step"><span class="ps-num">1</span><span>Abra o app do seu banco</span></div>
+      <div class="pix-step"><span class="ps-num">2</span><span>Vá em PIX → Pagar → Chave</span></div>
+      <div class="pix-step"><span class="ps-num">3</span><span>Cole a chave e confirme o valor</span></div>
+      <div class="pix-step"><span class="ps-num">4</span><span>Envie o comprovante para o suporte</span></div>
+    </div>
+    <div class="aviso-box">Após o pagamento, seu saldo será creditado em até <strong>30 minutos</strong>.</div>
+    <div class="pag-btns">
+      <button class="btn-pag btn-pag-outline" onclick="voltarStep1()">Alterar valor</button>
+      <button class="btn-pag" onclick="confirmarDeposito()">Já paguei</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Confirmação -->
+  <div class="pag-card hidden" id="step3">
+    <div class="pag-header">
+      <div class="pag-icon" id="step3-icon">⏳</div>
+      <h2 id="step3-titulo">Depósito Registrado!</h2>
+      <p id="step3-sub">Seu depósito está sob revisão</p>
+    </div>
+    <div id="status-box-pendente" class="status-card status-pending">
+      <div class="status-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <div><strong>Sob Revisão</strong><span>Estamos verificando seu pagamento</span></div>
+    </div>
+    <div id="status-box-aprovado" class="status-card status-ok" style="display:none">
+      <div class="status-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div><strong>Aprovado!</strong><span>Saldo creditado na sua conta</span></div>
+    </div>
+    <div id="status-box-recusado" class="status-card status-err" style="display:none">
+      <div class="status-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+      <div><strong>Recusado</strong><span>Entre em contato com o suporte</span></div>
+    </div>
+    <div class="timeline" id="timeline-wrap">
+      <div class="tl-item tl-done"><span class="tl-dot"></span><span>Pagamento enviado</span><span class="tl-time">Agora</span></div>
+      <div class="tl-item tl-active" id="tl-step2"><span class="tl-dot"></span><span>Aguardando confirmação</span><span class="tl-time">Em andamento</span></div>
+      <div class="tl-item" id="tl-step3"><span class="tl-dot"></span><span>Saldo creditado</span><span class="tl-time">Até 30 min</span></div>
+    </div>
+    <div class="aviso-box" id="step3-aviso">Envie o comprovante para nosso suporte para agilizar a confirmação.</div>
+    <a href="dashboard.html" class="btn-pag" style="display:block;text-align:center;text-decoration:none;margin-top:20px">Voltar para Minha Conta</a>
+  </div>
+
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, addDoc, collection, serverTimestamp, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const app = initializeApp({
+    apiKey: "AIzaSyCXB1Y1dqo0nCiNUEJ5eBwVNRUp2RIEqHk",
+    authDomain: "raspa-979d4.firebaseapp.com",
+    projectId: "raspa-979d4",
+    storageBucket: "raspa-979d4.firebasestorage.app",
+    messagingSenderId: "686362667379",
+    appId: "1:686362667379:web:d7d72dd87129818ee2bd06"
+  });
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  let currentUser = null;
+  let valorDeposito = 0;
+  let depositoId = null;
+  let unsubDeposito = null;
+
+  function fmt(v) { return Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 }); }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.remove('hidden');
+    setTimeout(() => t.classList.add('hidden'), 3000);
+  }
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = 'login.html'; return; }
+    currentUser = user;
+    const snap = await getDoc(doc(db, 'usuarios', user.uid));
+    const dados = snap.data() || {};
+    document.getElementById('nav-saldo-val').textContent = fmt(dados.saldo || 0);
+  });
+
+  window.setValor = function(v, btn) {
+    document.getElementById('input-valor').value = v;
+    document.querySelectorAll('.vr-btn').forEach(b => b.classList.remove('vr-active'));
+    btn.classList.add('vr-active');
+  };
+
+  window.continuar = function() {
+    const val = parseFloat(document.getElementById('input-valor').value);
+    if (!val || val < 10) return showToast('Valor mínimo: R$ 10,00');
+    if (val > 5000) return showToast('Valor máximo: R$ 5.000,00');
+    valorDeposito = val;
+    const fmtVal = 'R$ ' + fmt(val);
+    document.getElementById('pix-valor-show').textContent = fmtVal;
+    document.getElementById('pix-dado-valor').textContent = fmtVal;
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2-pix').classList.remove('hidden');
+  };
+
+  window.copiarPix = function() {
+    navigator.clipboard.writeText('joaovicctor1105@gmail.com');
+    const btn = document.getElementById('btn-copiar');
+    btn.textContent = 'Copiado!'; btn.style.background = '#4ade80'; btn.style.color = '#0b0b18';
+    setTimeout(() => { btn.textContent = 'Copiar'; btn.style.background = ''; btn.style.color = ''; }, 2000);
+  };
+
+  window.voltarStep1 = function() {
+    document.getElementById('step2-pix').classList.add('hidden');
+    document.getElementById('step1').classList.remove('hidden');
+  };
+
+  window.confirmarDeposito = async function() {
+    if (!currentUser) return;
+    const btn = document.querySelector('#step2-pix .btn-pag:last-child');
+    if (btn) { btn.disabled = true; btn.textContent = 'Registrando...'; }
+    try {
+      const snap = await getDoc(doc(db, 'usuarios', currentUser.uid));
+      const dados = snap.data() || {};
+      const depRef = await addDoc(collection(db, 'depositos'), {
+        uid: currentUser.uid,
+        nome: dados.nome || currentUser.email || '',
+        email: currentUser.email || '',
+        valor: valorDeposito,
+        metodo: 'pix',
+        status: 'pendente',
+        criadoEm: serverTimestamp()
+      });
+      depositoId = depRef.id;
+      await addDoc(collection(db, 'transacoes'), {
+        uid: currentUser.uid,
+        tipo: 'deposito',
+        valor: valorDeposito,
+        descricao: 'Depósito via PIX',
+        status: 'pendente',
+        criadoEm: serverTimestamp()
+      });
+      document.getElementById('step2-pix').classList.add('hidden');
+      document.getElementById('step3').classList.remove('hidden');
+      // Escuta em tempo real o status do depósito
+      unsubDeposito = onSnapshot(doc(db, 'depositos', depositoId), (snap) => {
+        if (!snap.exists()) return;
+        const status = snap.data().status;
+        if (status === 'aprovado') {
+          document.getElementById('step3-icon').textContent = '✅';
+          document.getElementById('step3-titulo').textContent = 'Depósito Aprovado!';
+          document.getElementById('step3-sub').textContent = 'Seu saldo foi creditado com sucesso';
+          document.getElementById('status-box-pendente').style.display = 'none';
+          document.getElementById('status-box-aprovado').style.display = 'flex';
+          document.getElementById('tl-step2').classList.remove('tl-active');
+          document.getElementById('tl-step2').classList.add('tl-done');
+          document.getElementById('tl-step3').classList.add('tl-done');
+          document.getElementById('step3-aviso').textContent = 'Saldo disponível! Vá jogar agora.';
+          if (unsubDeposito) { unsubDeposito(); unsubDeposito = null; }
+        } else if (status === 'recusado') {
+          document.getElementById('step3-icon').textContent = '❌';
+          document.getElementById('step3-titulo').textContent = 'Depósito Recusado';
+          document.getElementById('step3-sub').textContent = 'Houve um problema com seu depósito';
+          document.getElementById('status-box-pendente').style.display = 'none';
+          document.getElementById('status-box-recusado').style.display = 'flex';
+          document.getElementById('step3-aviso').textContent = 'Entre em contato com o suporte para mais informações.';
+          if (unsubDeposito) { unsubDeposito(); unsubDeposito = null; }
+        }
+      });
+    } catch(e) {
+      showToast('Erro ao registrar: ' + e.message);
+      if (btn) { btn.disabled = false; btn.textContent = 'Já paguei'; }
+    }
+  };
+</script>
+<a href="https://t.me/Tazz_7x" target="_blank" rel="noopener" style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#0088cc;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,136,204,.5);text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" title="Suporte via Telegram"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+</body>
+</html>

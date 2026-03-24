@@ -1,0 +1,338 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raspaetz7 - Raspou, Ganhou!</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><img src="https://raspadinhaum7d.online/assets/upload/68e26d2c4d315.png" alt="Raspaetz7"/></a>
+    <div class="nav-center">
+      <a href="#raspadinhas" class="nav-link">Raspadinhas</a>
+      <a href="#ganhadores" class="nav-link">Ganhadores</a>
+      <a href="#como-funciona" class="nav-link">Como Funciona</a>
+    </div>
+    <div class="nav-links" id="nav-links">
+      <a href="cadastro.html" class="btn btn-outline">Cadastrar</a>
+      <a href="login.html" class="btn btn-primary">Entrar</a>
+    </div>
+    <div class="nav-user hidden" id="nav-user">
+      <div class="nav-saldo-wrap">
+        <span class="nav-saldo-label">Saldo</span>
+        <span class="nav-saldo-val">R$ <span id="nav-saldo-val">0,00</span></span>
+      </div>
+      <a href="deposito.html" class="btn btn-outline">+ Depositar</a>
+      <a href="dashboard.html" class="btn btn-primary">Minha Conta</a>
+    </div>
+  </div>
+</nav>
+
+<!-- TICKER GANHADORES -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <div class="ticker" id="ticker">
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f5947d0f9.png" alt=""/>Bianca R** ganhou <b>R$ 20.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f5b3b7416.png" alt=""/>Carla C*** ganhou <b>R$ 17.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68cec0a9433fd.png" alt=""/>Fernanda A** ganhou <b>R$ 14.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68cec141b00a6.png" alt=""/>Vitória D** ganhou <b>R$ 10.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f4fae1b23.png" alt=""/>Rafaela S*** ganhou <b>R$ 10.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f4b43cded.png" alt=""/>Rafael C*** ganhou <b>R$ 9.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f0d0395b4.png" alt=""/>Beatriz S*** ganhou <b>R$ 9.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f189b3094.png" alt=""/>Felipe M*** ganhou <b>R$ 5.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f4dff349b.png" alt=""/>Lucas T*** ganhou <b>R$ 4.500,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68cca3466602f.png" alt=""/>Ana R*** ganhou <b>R$ 4.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4ec64f1a41.png" alt=""/>Felipe M*** ganhou <b>R$ 3.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e66f77942.png" alt=""/>Helena V*** ganhou <b>R$ 2.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e6578540a.png" alt=""/>Leonardo D*** ganhou <b>R$ 1.500,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4ea480feb0.png" alt=""/>Ana G** ganhou <b>R$ 1.200,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68cc9f94ab5b5.png" alt=""/>Helena S*** ganhou <b>R$ 1.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e55ce60e5.png" alt=""/>Gabriel G*** ganhou <b>R$ 800,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68cc9fcf9f959.png" alt=""/>Larissa T*** ganhou <b>R$ 500,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f0ebdd355.png" alt=""/>João P** ganhou <b>R$ 500,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e4e63e533.png" alt=""/>Gustavo C** ganhou <b>R$ 400,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e0dd71d76.jpg" alt=""/>Caio F*** ganhou <b>R$ 200,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e090ccdb7.png" alt=""/>Helena M** ganhou <b>R$ 50,00</b></span>
+      <!-- duplicate for seamless loop -->
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f5947d0f9.png" alt=""/>Bianca R** ganhou <b>R$ 20.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f5b3b7416.png" alt=""/>Carla C*** ganhou <b>R$ 17.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68cec0a9433fd.png" alt=""/>Fernanda A** ganhou <b>R$ 14.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68cec141b00a6.png" alt=""/>Vitória D** ganhou <b>R$ 10.000,00</b></span>
+      <span class="tick-item"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f4fae1b23.png" alt=""/>Rafaela S*** ganhou <b>R$ 10.000,00</b></span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge">OFERTA EXCLUSIVA — PRIMEIRO DEPÓSITO</div>
+      <h1>Raspe e Ganhe até<br/><span class="gold-text">R$ 20.000,00</span></h1>
+      <p class="hero-sub">Deposite R$ 50 ou mais e ganhe <strong>100% de bônus</strong>. PIX instantâneo, prêmios reais.</p>
+      <div class="hero-btns">
+        <a href="cadastro.html" class="btn-hero-main">Jogar Agora — É Grátis</a>
+        <a href="#raspadinhas" class="btn-hero-sec">Ver Raspadinhas</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><span class="trust-num">+12.400</span><span class="trust-label">Jogadores ativos</span></div>
+        <div class="trust-div"></div>
+        <div class="trust-item"><span class="trust-num">R$ 2,3M</span><span class="trust-label">Pagos em prêmios</span></div>
+        <div class="trust-div"></div>
+        <div class="trust-item"><span class="trust-num">98%</span><span class="trust-label">Satisfação</span></div>
+        <div class="trust-div"></div>
+        <div class="trust-item"><span class="trust-num">PIX</span><span class="trust-label">Instantâneo</span></div>
+      </div>
+    </div>
+    <div class="hero-banners">
+      <a href="jogar.html?id=1" class="hero-banner-card">
+        <img src="https://raspadinhaum7d.online/assets/img/icons/68a4f0ebdd355.png" alt="PIX na Conta"/>
+        <div class="hbc-info">
+          <span class="hbc-tag hbc-tag-green">POPULAR</span>
+          <span class="hbc-name">PIX na Conta</span>
+          <span class="hbc-prize">Até R$ 500</span>
+        </div>
+      </a>
+      <a href="jogar.html?id=4" class="hero-banner-card">
+        <img src="https://raspadinhaum7d.online/assets/img/icons/68a4f5947d0f9.png" alt="Luxo"/>
+        <div class="hbc-info">
+          <span class="hbc-tag">DESTAQUE</span>
+          <span class="hbc-name">Luxo</span>
+          <span class="hbc-prize">Até R$ 20.000</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- RASPADINHAS -->
+<section class="section" id="raspadinhas">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2>Escolha sua Raspadinha</h2>
+      <p>7 modalidades com prêmios de até R$ 20.000</p>
+    </div>
+    <div class="cards-grid">
+
+      <div class="rcard" onclick="goPlay(1)">
+        <div class="rcard-badge badge-yellow">Destaque</div>
+        <div class="rcard-banner"><img src="https://raspadinhaum7d.online/assets/img/banners/68a4de450c633.png" alt="PIX na Conta"/></div>
+        <div class="rcard-body">
+          <div class="rcard-price-row"><span class="rcard-price">R$ 1,00</span><span class="rcard-maxprize">ATÉ R$ 500,00</span></div>
+          <h3 class="rcard-name">PIX na Conta</h3>
+          <p class="rcard-desc">Raspe e receba prêmios em DINHEIRO direto no seu PIX</p>
+          <div class="rcard-players"><span class="dot-green"></span> 1.243 jogando agora</div>
+          <button class="rcard-btn">Jogar <span class="rcard-btn-price">R$ 1,00</span></button>
+        </div>
+      </div>
+
+      <div class="rcard" onclick="goPlay(2)">
+        <div class="rcard-banner"><img src="https://raspadinhaum7d.online/assets/img/banners/68cec2e4b32f5.png" alt="Sonho de Consumo"/></div>
+        <div class="rcard-body">
+          <div class="rcard-price-row"><span class="rcard-price">R$ 2,00</span><span class="rcard-maxprize">ATÉ R$ 14.000,00</span></div>
+          <h3 class="rcard-name">Sonho de Consumo</h3>
+          <p class="rcard-desc">Eletro, eletrônicos, iPhone, TV, geladeira... prêmios de até R$14.000</p>
+          <div class="rcard-players"><span class="dot-green"></span> 876 jogando agora</div>
+          <button class="rcard-btn">Jogar <span class="rcard-btn-price">R$ 2,00</span></button>
+        </div>
+      </div>
+
+      <div class="rcard" onclick="goPlay(3)">
+        <div class="rcard-banner"><img src="https://raspadinhaum7d.online/assets/img/banners/68a4e8f95590b.png" alt="Vida Noturna"/></div>
+        <div class="rcard-body">
+          <div class="rcard-price-row"><span class="rcard-price">R$ 3,00</span><span class="rcard-maxprize">ATÉ R$ 3.000,00</span></div>
+          <h3 class="rcard-name">Vida Noturna</h3>
+          <p class="rcard-desc">Bebidas, acessórios e muito mais. Prêmios de até R$ 3.000</p>
+          <div class="rcard-players"><span class="dot-green"></span> 654 jogando agora</div>
+          <button class="rcard-btn">Jogar <span class="rcard-btn-price">R$ 3,00</span></button>
+        </div>
+      </div>
+
+      <div class="rcard" onclick="goPlay(4)">
+        <div class="rcard-banner"><img src="https://raspadinhaum7d.online/assets/img/banners/68cc9ee66d386.jpeg" alt="Me Mimei"/></div>
+        <div class="rcard-body">
+          <div class="rcard-price-row"><span class="rcard-price">R$ 4,00</span><span class="rcard-maxprize">ATÉ R$ 4.000,00</span></div>
+          <h3 class="rcard-name">Me Mimei</h3>
+          <p class="rcard-desc">Shopee, Shein, presentinhos... Quer se mimar? Prêmios de até R$ 4.000</p>
+          <div class="rcard-players"><span class="dot-green"></span> 521 jogando agora</div>
+          <button class="rcard-btn">Jogar <span class="rcard-btn-price">R$ 4,00</span></button>
+        </div>
+      </div>
+
+      <div class="rcard" onclick="goPlay(5)">
+        <div class="rcard-banner"><img src="https://raspadinhaum7d.online/assets/img/banners/68a2b0cc69b50.png" alt="Super Prêmios"/></div>
+        <div class="rcard-body">
+          <div class="rcard-price-row"><span class="rcard-price">R$ 5,00</span><span class="rcard-maxprize">ATÉ R$ 700,00</span></div>
+          <h3 class="rcard-name">Super Prêmios</h3>
+          <p class="rcard-desc">Prêmios variados de alto valor. Sua chance de ganhar grande!</p>
+          <div class="rcard-players"><span class="dot-green"></span> 432 jogando agora</div>
+          <button class="rcard-btn">Jogar <span class="rcard-btn-price">R$ 5,00</span></button>
+        </div>
+      </div>
+
+      <div class="rcard" onclick="goPlay(6)">
+        <div class="rcard-banner"><img src="https://raspadinhaum7d.online/assets/img/banners/68a4ee1887192.png" alt="Super Prêmios 10"/></div>
+        <div class="rcard-body">
+          <div class="rcard-price-row"><span class="rcard-price">R$ 10,00</span><span class="rcard-maxprize">ATÉ R$ 10.000,00</span></div>
+          <h3 class="rcard-name">Super Prêmios 10</h3>
+          <p class="rcard-desc">Prêmios de até R$ 10.000. Quanto maior a aposta, maior o prêmio!</p>
+          <div class="rcard-players"><span class="dot-green"></span> 321 jogando agora</div>
+          <button class="rcard-btn">Jogar <span class="rcard-btn-price">R$ 10,00</span></button>
+        </div>
+      </div>
+
+      <div class="rcard rcard-hot" onclick="goPlay(7)">
+        <div class="rcard-badge badge-red">Hot</div>
+        <div class="rcard-banner"><img src="https://raspadinhaum7d.online/assets/img/banners/68a4f33f25aca.png" alt="Luxo"/></div>
+        <div class="rcard-body">
+          <div class="rcard-price-row"><span class="rcard-price">R$ 20,00</span><span class="rcard-maxprize">ATÉ R$ 20.000,00</span></div>
+          <h3 class="rcard-name">Luxo</h3>
+          <p class="rcard-desc">Quadriciclo, moto, iPhone 17 Pro Max... Prêmios de até R$ 20.000!</p>
+          <div class="rcard-players"><span class="dot-green"></span> 198 jogando agora</div>
+          <button class="rcard-btn">Jogar <span class="rcard-btn-price">R$ 20,00</span></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ÚLTIMOS GANHADORES -->
+<section class="section section-dark" id="ganhadores">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2>Últimos Ganhadores</h2>
+      <p>Veja quem ganhou recentemente</p>
+    </div>
+    <div class="winners-grid">
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f5947d0f9.png" alt=""/><div class="wcard-info"><span class="wcard-name">Bianca R**</span><span class="wcard-prize-name">Quadriciclo</span><span class="wcard-val">R$ 20.000,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f5b3b7416.png" alt=""/><div class="wcard-info"><span class="wcard-name">Carla C***</span><span class="wcard-prize-name">Moto Honda 160</span><span class="wcard-val">R$ 17.000,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68cec0a9433fd.png" alt=""/><div class="wcard-info"><span class="wcard-name">Fernanda A**</span><span class="wcard-prize-name">iPhone 17 Pro Max</span><span class="wcard-val">R$ 14.000,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68cec141b00a6.png" alt=""/><div class="wcard-info"><span class="wcard-name">Vitória D**</span><span class="wcard-prize-name">iPhone 17</span><span class="wcard-val">R$ 10.000,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f4fae1b23.png" alt=""/><div class="wcard-info"><span class="wcard-name">Rafaela S***</span><span class="wcard-prize-name">Moto Honda Pop</span><span class="wcard-val">R$ 10.000,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f4b43cded.png" alt=""/><div class="wcard-info"><span class="wcard-name">Rafael C***</span><span class="wcard-prize-name">iPhone 15 Pro Max</span><span class="wcard-val">R$ 9.000,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f0d0395b4.png" alt=""/><div class="wcard-info"><span class="wcard-name">Beatriz S***</span><span class="wcard-prize-name">Apple Watch Ultra</span><span class="wcard-val">R$ 9.000,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f189b3094.png" alt=""/><div class="wcard-info"><span class="wcard-name">Felipe M***</span><span class="wcard-prize-name">Geladeira Frost Free</span><span class="wcard-val">R$ 5.000,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f4dff349b.png" alt=""/><div class="wcard-info"><span class="wcard-name">Lucas T***</span><span class="wcard-prize-name">PlayStation 5</span><span class="wcard-val">R$ 4.500,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f4cc597ff.png" alt=""/><div class="wcard-info"><span class="wcard-name">Gabriel R**</span><span class="wcard-prize-name">Xbox Series X</span><span class="wcard-val">R$ 4.200,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68cca3466602f.png" alt=""/><div class="wcard-info"><span class="wcard-name">Ana R***</span><span class="wcard-prize-name">Bolsa Gucci</span><span class="wcard-val">R$ 4.000,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4ec64f1a41.png" alt=""/><div class="wcard-info"><span class="wcard-name">Felipe M***</span><span class="wcard-prize-name">JBL Boombox</span><span class="wcard-val">R$ 3.000,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e66f77942.png" alt=""/><div class="wcard-info"><span class="wcard-name">Helena V***</span><span class="wcard-prize-name">TV 55"</span><span class="wcard-val">R$ 2.000,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e6578540a.png" alt=""/><div class="wcard-info"><span class="wcard-name">Leonardo D***</span><span class="wcard-prize-name">Apple Watch</span><span class="wcard-val">R$ 1.500,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4ea480feb0.png" alt=""/><div class="wcard-info"><span class="wcard-name">Ana G**</span><span class="wcard-prize-name">Whisky Royal Salute</span><span class="wcard-val">R$ 1.200,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68cc9f94ab5b5.png" alt=""/><div class="wcard-info"><span class="wcard-name">Helena S***</span><span class="wcard-prize-name">Kit Kerastase</span><span class="wcard-val">R$ 1.000,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e55ce60e5.png" alt=""/><div class="wcard-info"><span class="wcard-name">Gabriel G***</span><span class="wcard-prize-name">Air Fryer</span><span class="wcard-val">R$ 800,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e6394df00.png" alt=""/><div class="wcard-info"><span class="wcard-name">Matheus M***</span><span class="wcard-prize-name">Tablet</span><span class="wcard-val">R$ 700,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68cc9fcf9f959.png" alt=""/><div class="wcard-info"><span class="wcard-name">Larissa T***</span><span class="wcard-prize-name">Perfume Dior</span><span class="wcard-val">R$ 500,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f0ebdd355.png" alt=""/><div class="wcard-info"><span class="wcard-name">João P**</span><span class="wcard-prize-name">500 Reais</span><span class="wcard-val">R$ 500,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68cca0028a514.png" alt=""/><div class="wcard-info"><span class="wcard-name">Rafaela S***</span><span class="wcard-prize-name">Combo Wepink</span><span class="wcard-val">R$ 400,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e4e63e533.png" alt=""/><div class="wcard-info"><span class="wcard-name">Gustavo C**</span><span class="wcard-prize-name">Echo Dot Alexa</span><span class="wcard-val">R$ 400,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4ebf634a0d.png" alt=""/><div class="wcard-info"><span class="wcard-name">Caio C***</span><span class="wcard-prize-name">Chandon Rosé</span><span class="wcard-val">R$ 200,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e0dd71d76.jpg" alt=""/><div class="wcard-info"><span class="wcard-name">Caio F***</span><span class="wcard-prize-name">200 Reais</span><span class="wcard-val">R$ 200,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4ebb438b7a.png" alt=""/><div class="wcard-info"><span class="wcard-name">Bianca B**</span><span class="wcard-prize-name">Gin Tanqueray</span><span class="wcard-val">R$ 150,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e51c557f4.png" alt=""/><div class="wcard-info"><span class="wcard-name">Carla M**</span><span class="wcard-prize-name">JBL Caixinha</span><span class="wcard-val">R$ 150,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f263092eb.jpg" alt=""/><div class="wcard-info"><span class="wcard-name">Maria M**</span><span class="wcard-prize-name">100 Reais</span><span class="wcard-val">R$ 100,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4e574dee08.png" alt=""/><div class="wcard-info"><span class="wcard-name">Miguel S***</span><span class="wcard-prize-name">PowerBank</span><span class="wcard-val">R$ 60,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f274ed597.png" alt=""/><div class="wcard-info"><span class="wcard-name">Maria A***</span><span class="wcard-prize-name">50 Reais</span><span class="wcard-val">R$ 50,00</span></div></div>
+      <div class="wcard"><img src="https://raspadinhaum7d.online/assets/img/icons/68cca06d4e33d.png" alt=""/><div class="wcard-info"><span class="wcard-name">Aline S***</span><span class="wcard-prize-name">Cartão Shein</span><span class="wcard-val">R$ 40,00</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="section" id="como-funciona">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2>Como Funciona?</h2>
+      <p>Em menos de 2 minutos você já pode estar ganhando</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-step"><div class="how-num">01</div><div class="how-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h4>Cadastre-se Grátis</h4><p>Crie sua conta em segundos. Sem CPF obrigatório.</p></div>
+      <div class="how-arrow">→</div>
+      <div class="how-step"><div class="how-num">02</div><div class="how-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div><h4>Deposite via PIX</h4><p>Mínimo R$ 10. Crédito instantâneo na conta.</p></div>
+      <div class="how-arrow">→</div>
+      <div class="how-step"><div class="how-num">03</div><div class="how-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><h4>Raspe e Ganhe</h4><p>Escolha sua raspadinha e raspe para revelar o prêmio.</p></div>
+      <div class="how-arrow">→</div>
+      <div class="how-step"><div class="how-num">04</div><div class="how-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div><h4>Receba no PIX</h4><p>Prêmios pagos diretamente na sua chave PIX.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="cadastro.html" class="btn-hero-main">Criar Conta Grátis</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="https://raspadinhaum7d.online/assets/upload/68e26d2c4d315.png" alt="Raspaetz7" style="height:36px;object-fit:contain;margin-bottom:10px"/>
+        <p>A melhor plataforma de raspadinhas do Brasil.<br/>Raspou, levou!</p>
+      </div>
+      <div class="footer-links-col"><h5>Plataforma</h5><a href="#raspadinhas">Raspadinhas</a><a href="dashboard.html">Minha Conta</a><a href="#como-funciona">Como Funciona</a></div>
+      <div class="footer-links-col"><h5>Legal</h5><a href="#">Termos de Uso</a><a href="#">Política de Privacidade</a><a href="#">Termos de Bônus</a></div>
+      <div class="footer-links-col"><h5>Suporte</h5><a href="#">Central de Ajuda</a><a href="https://t.me/Tazz_7x" target="_blank">Suporte Telegram</a><a href="#">Jogo Responsável</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Raspaetz7. Todos os direitos reservados. Jogue com responsabilidade. +18</p>
+      <div class="footer-badges"><span class="fbadge">SSL Seguro</span><span class="fbadge">PIX</span><span class="fbadge">+18</span></div>
+    </div>
+  </div>
+</footer>
+
+<!-- Telegram suporte flutuante -->
+<a href="https://t.me/Tazz_7x" target="_blank" rel="noopener" style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#0088cc;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,136,204,.5);text-decoration:none;font-size:1.6rem;transition:transform .2s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" title="Suporte via Telegram">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+</a>
+
+<div id="toast" class="toast hidden"></div>
+
+<script type="module">
+import { getCurrentUser, getUserData, atualizarNavbar } from './auth.js';
+getCurrentUser().then(user => {
+  if (user) {
+    getUserData(user.uid).then(dados => atualizarNavbar(dados));
+  }
+});
+</script>
+<script>
+function goPlay(id) {
+  window.location.href = 'jogar.html?id=' + id;
+}
+
+// Notificação flutuante de ganhadores (simulado)
+(function() {
+  const winners = [
+    {nome:'Bianca R**',premio:'Quadriciclo',val:'R$ 20.000',icon:'https://raspadinhaum7d.online/assets/img/icons/68a4f5947d0f9.png'},
+    {nome:'Carla C***',premio:'Moto Honda 160',val:'R$ 17.000',icon:'https://raspadinhaum7d.online/assets/img/icons/68a4f5b3b7416.png'},
+    {nome:'Fernanda A**',premio:'Iphone 17 Pro Max',val:'R$ 14.000',icon:'https://raspadinhaum7d.online/assets/img/icons/68cec0a9433fd.png'},
+    {nome:'Lucas T***',premio:'PlayStation 5',val:'R$ 4.500',icon:'https://raspadinhaum7d.online/assets/img/icons/68a4f4dff349b.png'},
+    {nome:'Ana R***',premio:'Bolsa Gucci',val:'R$ 4.000',icon:'https://raspadinhaum7d.online/assets/img/icons/68cca3466602f.png'},
+    {nome:'Rafael C***',premio:'Apple Watch Ultra',val:'R$ 9.000',icon:'https://raspadinhaum7d.online/assets/img/icons/68a4f0d0395b4.png'},
+    {nome:'Joao P**',premio:'R$ 500 no PIX',val:'R$ 500',icon:'https://raspadinhaum7d.online/assets/img/icons/68a4f0ebdd355.png'},
+    {nome:'Vitoria D**',premio:'Iphone 17',val:'R$ 10.000',icon:'https://raspadinhaum7d.online/assets/img/icons/68cec141b00a6.png'}
+  ];
+  const notif = document.createElement('div');
+  notif.id = 'win-notif';
+  notif.style.cssText = 'position:fixed;bottom:96px;left:20px;z-index:9998;background:#13132b;border:1px solid #f5c51855;border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:12px;max-width:280px;box-shadow:0 8px 32px rgba(0,0,0,.5);transform:translateX(-320px);transition:transform .4s cubic-bezier(.175,.885,.32,1.275)';
+  notif.innerHTML = '<img id="wn-img" src="" style="width:40px;height:40px;object-fit:contain;border-radius:8px;background:#0b0b18;flex-shrink:0"/><div><div id="wn-nome" style="font-size:.8rem;font-weight:800;color:#fff"></div><div id="wn-premio" style="font-size:.72rem;color:#888;margin-top:2px"></div><div id="wn-val" style="font-size:.85rem;font-weight:900;color:#4ade80;margin-top:2px"></div></div>';
+  document.body.appendChild(notif);
+  let idx = 0;
+  function showNext() {
+    const w = winners[idx % winners.length]; idx++;
+    document.getElementById('wn-img').src = w.icon;
+    document.getElementById('wn-nome').textContent = w.nome + ' ganhou!';
+    document.getElementById('wn-premio').textContent = w.premio;
+    document.getElementById('wn-val').textContent = w.val;
+    notif.style.transform = 'translateX(0)';
+    setTimeout(() => { notif.style.transform = 'translateX(-320px)'; }, 4000);
+  }
+  setTimeout(() => { showNext(); setInterval(showNext, 12000); }, 5000);
+})();
+</script>
+</body>
+</html>

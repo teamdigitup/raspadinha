@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Raspaetz7 - Jogar</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,sans-serif;background:#0b0b18;color:#fff;min-height:100vh}
+.hidden{display:none!important}
+#loading-screen{position:fixed;inset:0;background:#0b0b18;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:16px}
+.spinner{width:48px;height:48px;border:4px solid #1e1e3a;border-top-color:#f5c518;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading-screen p{color:#888;font-size:.9rem}
+.navbar{background:#0d0d1f;border-bottom:1px solid #1e1e3a;position:sticky;top:0;z-index:100;height:64px}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:1.2rem;font-weight:900;color:#f5c518}
+.logo img{height:36px;object-fit:contain}
+.nav-user{display:flex;align-items:center;gap:12px}
+.nav-saldo-wrap{display:flex;flex-direction:column;align-items:flex-end}
+.nav-saldo-label{font-size:.65rem;color:#555;text-transform:uppercase;letter-spacing:.5px}
+.nav-saldo-val{font-size:1rem;font-weight:800;color:#4ade80}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;font-weight:700;font-family:Inter,sans-serif;cursor:pointer;text-decoration:none;border:none;transition:all .2s;font-size:.85rem;padding:9px 18px}
+.btn-primary{background:linear-gradient(135deg,#f5c518,#d4a017);color:#0b0b18}
+.btn-primary:hover{opacity:.9}
+.btn-outline{background:transparent;border:1.5px solid #2a2a4a;color:#ccc}
+.btn-outline:hover{border-color:#f5c518;color:#f5c518}
+/* HERO */
+.hero-banner{background:#0d0d1f;border-bottom:1px solid #1e1e3a;overflow:hidden}
+.hero-inner{max-width:1200px;margin:0 auto;padding:48px 24px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero-text h1{font-size:2.4rem;font-weight:900;line-height:1.15;margin-bottom:12px}
+.hero-text h1 span{color:#f5c518}
+.hero-text p{color:#888;font-size:1rem;margin-bottom:24px;line-height:1.6}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.hero-prizes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.hero-prize-card{background:#13132b;border:1px solid #1e1e3a;border-radius:12px;padding:12px;text-align:center;transition:all .2s}
+.hero-prize-card:hover{border-color:#f5c518;transform:translateY(-2px)}
+.hero-prize-card img{width:56px;height:56px;object-fit:contain;margin:0 auto 8px;display:block}
+.hero-prize-card .hpc-emoji{font-size:2rem;margin-bottom:8px;display:none}
+.hero-prize-card .hpc-name{font-size:.72rem;color:#ccc;font-weight:700;margin-bottom:2px}
+.hero-prize-card .hpc-val{font-size:.8rem;color:#4ade80;font-weight:800}
+.hero-ticker{background:#0b0b18;border-top:1px solid #1e1e3a;padding:10px 0;overflow:hidden}
+.ticker-track{display:flex;gap:32px;animation:tickerMove 30s linear infinite;white-space:nowrap}
+@keyframes tickerMove{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:flex;align-items:center;gap:8px;font-size:.8rem;color:#888;flex-shrink:0}
+.ticker-item img{width:24px;height:24px;object-fit:contain;border-radius:4px}
+.ticker-item strong{color:#f5c518}
+/* SELECTOR */
+.game-selector{max-width:1200px;margin:0 auto;padding:40px 24px}
+.game-selector h2{font-size:1.8rem;font-weight:900;color:#f5c518;margin-bottom:8px}
+.game-selector>p{color:#888;margin-bottom:32px}
+.gsel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.gsel-card{background:#13132b;border:1.5px solid #1e1e3a;border-radius:16px;overflow:hidden;cursor:pointer;transition:all .25s}
+.gsel-card:hover{border-color:#f5c518;transform:translateY(-4px);box-shadow:0 12px 40px rgba(245,197,24,.15)}
+.gsel-thumb{width:100%;height:160px;position:relative;overflow:hidden;background:#0d0d1f}
+.gsel-thumb img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;z-index:1}
+.gsel-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;z-index:0}
+.gsel-fallback span{font-size:2.5rem}
+.gsel-fallback small{font-size:.7rem;font-weight:800;color:#f5c518;text-transform:uppercase;letter-spacing:1px;text-align:center;padding:0 8px}
+.gsel-badge{position:absolute;top:10px;right:10px;z-index:2;background:linear-gradient(135deg,#f5c518,#d4a017);color:#0b0b18;font-size:.65rem;font-weight:900;padding:3px 10px;border-radius:20px;text-transform:uppercase}
+.gsel-body{padding:14px 16px}
+.gsel-name{font-size:.95rem;font-weight:800;color:#fff;margin-bottom:4px}
+.gsel-prize{font-size:.8rem;color:#4ade80;font-weight:700;margin-bottom:10px}
+.gsel-price{display:flex;align-items:center;justify-content:space-between}
+.gsel-val{font-size:1.2rem;font-weight:900;color:#f5c518}
+.gsel-btn{background:linear-gradient(135deg,#f5c518,#d4a017);color:#0b0b18;border:none;border-radius:8px;padding:7px 16px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:Inter,sans-serif}
+/* GAME */
+.game-main{max-width:1200px;margin:0 auto;padding:24px;display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start}
+.game-left{display:flex;flex-direction:column;gap:16px}
+.game-banner{width:100%;border-radius:16px;overflow:hidden;position:relative;min-height:200px;background:#13132b}
+.game-banner img{width:100%;height:240px;object-fit:cover;display:block}
+.game-banner-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(11,11,24,.9),rgba(11,11,24,.2));display:flex;align-items:center;padding:28px 32px}
+.game-banner-text h1{font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:6px}
+.game-banner-text p{color:#ccc;font-size:.9rem}
+.gbadge{display:inline-block;background:linear-gradient(135deg,#f5c518,#d4a017);color:#0b0b18;font-size:.7rem;font-weight:900;padding:4px 12px;border-radius:20px;margin-bottom:8px;text-transform:uppercase}
+.saldo-bar{background:#13132b;border:1px solid #1e1e3a;border-radius:14px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.saldo-info{display:flex;flex-direction:column;gap:2px}
+.saldo-lbl{font-size:.72rem;color:#666;text-transform:uppercase;letter-spacing:.5px}
+.saldo-v{font-size:1.5rem;font-weight:900;color:#4ade80}
+.saldo-actions{display:flex;gap:8px}
+.game-card{background:#13132b;border:1.5px solid #1e1e3a;border-radius:20px;overflow:hidden}
+.gc-header{padding:20px 24px 16px;border-bottom:1px solid #1e1e3a;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.gc-title{font-size:1rem;font-weight:800;color:#fff}
+.gc-cost{font-size:.85rem;color:#f5c518;font-weight:700}
+.gc-body{padding:24px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.scratch-wrap{position:relative;border-radius:14px;overflow:hidden;cursor:crosshair;box-shadow:0 8px 32px rgba(0,0,0,.5);width:100%;max-width:520px;height:300px;background:#0b0b18}
+#scratch-canvas{display:block;position:absolute;top:0;left:0;z-index:2;touch-action:none}
+#prize-canvas{display:block;position:absolute;top:0;left:0;z-index:1}
+.prize-overlay{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;border-radius:14px;overflow:hidden}
+.prize-overlay.hidden{display:none!important}
+.prize-overlay-bg{position:absolute;inset:0;z-index:0}
+.prize-overlay-bg.win{background:radial-gradient(ellipse at center,#0a2a10 0%,#0b0b18 70%)}
+.prize-overlay-bg.lose{background:radial-gradient(ellipse at center,#13132b 0%,#0b0b18 70%)}
+.prize-overlay-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;width:100%}
+.po-prize-img{width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(245,197,24,.5));animation:popIn .4s cubic-bezier(.175,.885,.32,1.275)}
+.po-prize-emoji{font-size:4rem;animation:popIn .4s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes popIn{0%{transform:scale(0) rotate(-10deg);opacity:0}100%{transform:scale(1) rotate(0deg);opacity:1}}
+.po-result-badge{font-size:.7rem;font-weight:900;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:1px}
+.po-result-badge.win{background:linear-gradient(135deg,#4ade80,#16a34a);color:#fff}
+.po-result-badge.lose{background:#1e1e3a;color:#888;border:1px solid #2a2a4a}
+.po-title{font-size:1rem;font-weight:800;color:#fff;text-align:center}
+.po-val{font-size:2rem;font-weight:900;text-align:center}
+.po-val.win{color:#4ade80;text-shadow:0 0 20px rgba(74,222,128,.4)}
+.po-val.lose{color:#888}
+.po-prize-name{font-size:.8rem;color:#aaa;text-align:center;margin-top:-4px}
+.po-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:4px}
+.hint{font-size:.85rem;color:#666;text-align:center}
+.btn-reveal{background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:Inter,sans-serif;display:flex;align-items:center;gap:6px;transition:all .2s}
+.btn-reveal:hover{opacity:.9;transform:translateY(-1px)}
+.btn-reveal:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.gc-footer{padding:20px 24px;border-top:1px solid #1e1e3a;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.taz-wrap{display:flex;align-items:center;gap:12px}
+.taz-wrap img{height:80px;object-fit:contain}
+.taz-txt{font-size:.82rem;color:#888;line-height:1.5}
+.taz-txt strong{color:#f5c518;display:block;font-size:.9rem}
+.game-right{position:sticky;top:80px;display:flex;flex-direction:column;gap:16px}
+.gpanel{background:#13132b;border:1.5px solid #1e1e3a;border-radius:16px;overflow:hidden}
+.gpanel-hdr{padding:16px 20px;border-bottom:1px solid #1e1e3a;display:flex;align-items:center;gap:10px}
+.gpanel-hdr h3{font-size:.9rem;font-weight:800;color:#f5c518}
+.taz-panel{text-align:center;padding:20px}
+.taz-panel img{height:110px;object-fit:contain;margin:0 auto 12px;display:block}
+.taz-panel p{font-size:.82rem;color:#888;line-height:1.5}
+.taz-panel strong{color:#fff;font-size:.9rem;display:block;margin-bottom:6px}
+.prizes-list{padding:0 4px 8px}
+.pi{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid #0f0f22}
+.pi:last-child{border-bottom:none}
+.pi-icon{width:36px;height:36px;border-radius:8px;object-fit:contain;background:#0b0b18;flex-shrink:0}
+.pi-info{flex:1;min-width:0}
+.pi-name{font-size:.8rem;font-weight:700;color:#ccc}
+.pi-prob{font-size:.7rem;color:#555}
+.pi-val{font-size:.85rem;font-weight:800;color:#4ade80;white-space:nowrap}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e1e3a;color:#fff;padding:12px 24px;border-radius:12px;font-size:.9rem;font-weight:600;z-index:9999;border:1px solid #2a2a4a;transition:opacity .3s}
+.toast.hidden{opacity:0;pointer-events:none}
+.toast-error{border-color:#f87171;background:#2a1010}
+.confetti-p{position:fixed;pointer-events:none;z-index:9998;border-radius:2px;animation:cfFall 2.5s ease-in forwards}
+@keyframes cfFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(74,222,128,.3)}50%{box-shadow:0 0 40px rgba(74,222,128,.7)}}
+.scratch-wrap.win-glow{animation:glowPulse 1s ease-in-out 3}
+@media(max-width:900px){.game-main{grid-template-columns:1fr}.game-right{position:static}.gsel-grid{grid-template-columns:repeat(2,1fr)}.hero-inner{grid-template-columns:1fr}.hero-prizes{display:none}}
+@media(max-width:500px){.gsel-grid{grid-template-columns:1fr 1fr}.game-banner img{height:160px}.game-main{padding:12px}}
+</style>
+</head>
+<body>
+<div id="loading-screen"><div class="spinner"></div><p>Carregando...</p></div>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="https://raspadinhaum7d.online/assets/upload/68e26d2c4d315.png" alt="Raspaetz7"/>
+    </a>
+    <div class="nav-user">
+      <div class="nav-saldo-wrap"><span class="nav-saldo-label">Saldo</span><span class="nav-saldo-val">R$ <span id="nav-saldo">0,00</span></span></div>
+      <a href="deposito.html" class="btn btn-outline">+ Depositar</a>
+      <a href="dashboard.html" class="btn btn-primary">Minha Conta</a>
+    </div>
+  </div>
+</nav><!-- SELECTOR PAGE -->
+<div id="page-selector" class="hidden">
+<div class="hero-banner">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1>Raspe e <span>Ganhe</span><br/>Premios Reais!</h1>
+      <p>Mais de 7 categorias de raspadinha com premios de ate R$20.000. PIX na hora, sem complicacao.</p>
+      <div class="hero-btns">
+        <a href="deposito.html" class="btn btn-primary" style="font-size:1rem;padding:12px 28px">Depositar Agora</a>
+        <a href="#selector-anchor" class="btn btn-outline" style="font-size:1rem;padding:12px 28px">Ver Jogos</a>
+      </div>
+    </div>
+    <div class="hero-prizes">
+      <div class="hero-prize-card"><img src="https://raspadinhaum7d.online/assets/img/icons/68cec0a9433fd.png" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='block'"/><span class="hpc-emoji">&#128241;</span><div class="hpc-name">Iphone 17 Pro Max</div><div class="hpc-val">R$ 14.000</div></div>
+      <div class="hero-prize-card"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f5947d0f9.png" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='block'"/><span class="hpc-emoji">&#127949;</span><div class="hpc-name">Quadriciclo</div><div class="hpc-val">R$ 20.000</div></div>
+      <div class="hero-prize-card"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f5b3b7416.png" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='block'"/><span class="hpc-emoji">&#127949;</span><div class="hpc-name">Moto Honda 160</div><div class="hpc-val">R$ 17.000</div></div>
+      <div class="hero-prize-card"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f4dff349b.png" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='block'"/><span class="hpc-emoji">&#127918;</span><div class="hpc-name">PlayStation 5</div><div class="hpc-val">R$ 4.500</div></div>
+      <div class="hero-prize-card"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f0d0395b4.png" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='block'"/><span class="hpc-emoji">&#8987;</span><div class="hpc-name">Apple Watch Ultra</div><div class="hpc-val">R$ 9.000</div></div>
+      <div class="hero-prize-card"><img src="https://raspadinhaum7d.online/assets/img/icons/68a4f0ebdd355.png" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='block'"/><span class="hpc-emoji">&#128181;</span><div class="hpc-name">R$ 500 no PIX</div><div class="hpc-val">R$ 500</div></div>
+    </div>
+  </div>
+  <div class="hero-ticker"><div class="ticker-track" id="ticker-track"></div></div>
+</div>
+<div class="game-selector" id="selector-anchor">
+  <h2>Escolha sua Raspadinha</h2>
+  <p>Selecione uma categoria e tente a sorte!</p>
+  <div class="gsel-grid" id="selector-grid"></div>
+</div>
+</div>
+<!-- GAME PAGE -->
+<div id="page-game" class="hidden">
+  <div class="game-main">
+    <div class="game-left">
+      <div class="game-banner" id="game-banner-wrap">
+        <img id="game-banner-img" src="" alt="" onerror="this.style.display='none'"/>
+        <div class="game-banner-overlay">
+          <div class="game-banner-text">
+            <span class="gbadge" id="game-badge">Raspadinha</span>
+            <h1 id="game-title">...</h1>
+            <p id="game-desc"></p>
+          </div>
+        </div>
+      </div>
+      <div class="saldo-bar">
+        <div class="saldo-info"><span class="saldo-lbl">Seu saldo</span><span class="saldo-v">R$ <span id="saldo-display">0,00</span></span></div>
+        <div class="saldo-actions">
+          <a href="deposito.html" class="btn btn-outline" style="font-size:.82rem;padding:8px 14px">+ Depositar</a>
+          <button class="btn btn-outline" onclick="voltarSelector()" style="font-size:.82rem;padding:8px 14px">&#8592; Voltar</button>
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="gc-header">
+          <span class="gc-title" id="card-title">Raspadinha</span>
+          <span class="gc-cost">Custo: R$ <span id="card-cost">0,00</span></span>
+          <button class="btn-reveal" id="btn-reveal" onclick="revelarRapido()">&#9889; Revelar Rapido</button>
+        </div>
+        <div class="gc-body">
+          <div class="scratch-wrap" id="scratch-wrap">
+            <canvas id="prize-canvas"></canvas>
+            <canvas id="scratch-canvas"></canvas>
+            <div class="prize-overlay hidden" id="prize-overlay">
+              <div class="prize-overlay-bg" id="po-bg"></div>
+              <div class="prize-overlay-content">
+                <img class="po-prize-img hidden" id="po-img" src="" alt=""/>
+                <span class="po-prize-emoji hidden" id="po-emoji"></span>
+                <span class="po-result-badge" id="po-badge">Ganhou!</span>
+                <div class="po-title" id="po-title">Parabens!</div>
+                <div class="po-val" id="po-val"></div>
+                <div class="po-prize-name" id="po-prize-name"></div>
+                <div class="po-btns">
+                  <button class="btn btn-primary" onclick="novaRaspadinha()">&#127920; Nova Raspadinha</button>
+                  <button class="btn btn-outline" onclick="voltarSelector()">&#8592; Escolher outra</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="hint" id="scratch-hint">&#128070; Raspe a area acima para revelar seu premio!</p>
+        </div>
+        <div class="gc-footer">
+          <div class="taz-wrap">
+            <img src="https://raspadinhaum7d.online/assets/img/taz.png" onerror="this.style.display='none'" alt="Taz"/>
+            <div class="taz-txt"><strong>Taz diz:</strong><span id="taz-msg">Raspe e descubra seu premio!</span></div>
+          </div>
+          <button class="btn btn-primary" id="btn-nova" onclick="novaRaspadinha()" style="display:none">&#127920; Nova Raspadinha</button>
+        </div>
+      </div>
+    </div>
+    <div class="game-right">
+      <div class="gpanel">
+        <div class="taz-panel">
+          <img src="https://raspadinhaum7d.online/assets/img/taz.png" onerror="this.style.display='none'" alt="Taz"/>
+          <strong id="panel-name">Raspadinha</strong>
+          <p id="panel-desc">Raspe e descubra se voce e o proximo grande vencedor!</p>
+        </div>
+      </div>
+      <div class="gpanel">
+        <div class="gpanel-hdr"><span>&#127942;</span><h3>Premios disponiveis</h3></div>
+        <div class="prizes-list" id="prizes-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="toast" class="toast hidden"></div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyCXB1Y1dqo0nCiNUEJ5eBwVNRUp2RIEqHk",authDomain:"raspa-979d4.firebaseapp.com",projectId:"raspa-979d4",storageBucket:"raspa-979d4.firebasestorage.app",messagingSenderId:"686362667379",appId:"1:686362667379:web:d7d72dd87129818ee2bd06"});
+const auth=getAuth(app),db=getFirestore(app);
+const B="https://raspadinhaum7d.online/assets/img/banners/",I="https://raspadinhaum7d.online/assets/img/icons/";
+const TICKER=[
+  {nome:"Bianca R**",premio:"Quadriciclo",val:"R$ 20.000",icon:I+"68a4f5947d0f9.png"},
+  {nome:"Carla C***",premio:"Moto Honda 160",val:"R$ 17.000",icon:I+"68a4f5b3b7416.png"},
+  {nome:"Fernanda A**",premio:"Iphone 17 Pro Max",val:"R$ 14.000",icon:I+"68cec0a9433fd.png"},
+  {nome:"Vitoria D**",premio:"Iphone 17",val:"R$ 10.000",icon:I+"68cec141b00a6.png"},
+  {nome:"Rafael C***",premio:"Iphone 15 Pro Max",val:"R$ 9.000",icon:I+"68a4f4b43cded.png"},
+  {nome:"Beatriz S***",premio:"Apple Watch Ultra",val:"R$ 9.000",icon:I+"68a4f0d0395b4.png"},
+  {nome:"Lucas T***",premio:"PlayStation 5",val:"R$ 4.500",icon:I+"68a4f4dff349b.png"},
+  {nome:"Gabriel R**",premio:"Xbox Series X",val:"R$ 4.200",icon:I+"68a4f4cc597ff.png"},
+  {nome:"Ana R***",premio:"Bolsa Gucci",val:"R$ 4.000",icon:I+"68cca3466602f.png"},
+  {nome:"Joao P**",premio:"R$ 500 no PIX",val:"R$ 500",icon:I+"68a4f0ebdd355.png"}
+];
+const JOGOS=[
+  {id:"pix500",nome:"PIX na Conta",desc:"Premios de ate R$500 no PIX direto na sua conta!",custo:1,maxPremio:500,badge:"R$1,00",cor:"#001a0a",emoji:"??",banner:B+"68a4de450c633.png",premios:[{nome:"Nao foi dessa vez",valor:0,peso:60,icon:""},{nome:"R$ 5 no PIX",valor:5,peso:18,icon:I+"68a4e1446ff16.png"},{nome:"R$ 20 no PIX",valor:20,peso:10,icon:I+"68a4e04b7fd37.jpg"},{nome:"R$ 50 no PIX",valor:50,peso:7,icon:I+"68a4e090ccdb7.png"},{nome:"R$ 100 no PIX",valor:100,peso:4,icon:I+"68a4e0b678f9b.jpg"},{nome:"R$ 500 no PIX",valor:500,peso:1,icon:I+"68a4f0ebdd355.png"}]},
+  {id:"sonho",nome:"Sonho de Consumo",desc:"Eletronicos e premios de alto valor, ate R$14.000!",custo:2,maxPremio:14000,badge:"R$2,00",cor:"#0a001a",emoji:"??",banner:B+"68cec2e4b32f5.png",premios:[{nome:"Nao foi dessa vez",valor:0,peso:55,icon:""},{nome:"Carregador Turbo",valor:35,peso:18,icon:I+"68a4e4ffe4e4d.png"},{nome:"Echo Dot Alexa",valor:400,peso:10,icon:I+"68a4e4e63e533.png"},{nome:"PlayStation 5",valor:4500,peso:5,icon:I+"68a4f4dff349b.png"},{nome:"Xbox Series X",valor:4200,peso:5,icon:I+"68a4f4cc597ff.png"},{nome:"Iphone 17",valor:10000,peso:4,icon:I+"68cec141b00a6.png"},{nome:"Iphone 17 Pro Max",valor:14000,peso:3,icon:I+"68cec0a9433fd.png"}]},
+  {id:"noturna",nome:"Vida Noturna",desc:"Drinks, musica e premios de ate R$3.000!",custo:3,maxPremio:3000,badge:"R$3,00",cor:"#0a0a00",emoji:"??",banner:B+"68a4e8f95590b.png",premios:[{nome:"Nao foi dessa vez",valor:0,peso:55,icon:""},{nome:"Trident X Senses",valor:15,peso:18,icon:I+"68c9ea79410e0.png"},{nome:"Gin Tanqueray",valor:150,peso:12,icon:I+"68a4ebb438b7a.png"},{nome:"Chandon Rose",valor:200,peso:5,icon:I+"68a4ebf634a0d.png"},{nome:"Whisky Royal Salute",valor:1200,peso:8,icon:I+"68a4ea480feb0.png"},{nome:"Caixa de Som JBL Boombox",valor:3000,peso:2,icon:I+"68a4ec64f1a41.png"}]},
+  {id:"mimei",nome:"Me Mimei",desc:"Shopee, Shein e presentinhos ate R$4.000!",custo:4,maxPremio:4000,badge:"R$4,00",cor:"#1a001a",emoji:"???",banner:B+"68cc9ee66d386.jpeg",premios:[{nome:"Nao foi dessa vez",valor:0,peso:55,icon:""},{nome:"BodySplash Wepink",valor:30,peso:18,icon:I+"68cca0b440988.png"},{nome:"Cartao Shein R$40",valor:40,peso:12,icon:I+"68cca06d4e33d.png"},{nome:"Kit de Maquiagem",valor:200,peso:8,icon:I+"68cca02f17f72.png"},{nome:"Combo Wepink",valor:400,peso:5,icon:I+"68cca0028a514.png"},{nome:"Bolsa Gucci Marmont",valor:4000,peso:2,icon:I+"68cca3466602f.png"}]},
+  {id:"super5",nome:"Super Premios",desc:"Premios incriveis de ate R$700!",custo:5,maxPremio:700,badge:"R$5,00",cor:"#001a1a",emoji:"?",banner:B+"68a2b0cc69b50.png",premios:[{nome:"Nao foi dessa vez",valor:0,peso:55,icon:""},{nome:"Suporte de Celular",valor:40,peso:18,icon:I+"687eca170ba3c.png"},{nome:"PowerBank",valor:60,peso:12,icon:I+"68a4e574dee08.png"},{nome:"Caixinha de Som JBL",valor:150,peso:8,icon:I+"68a4e51c557f4.png"},{nome:"Air Fryer",valor:800,peso:5,icon:I+"68a4e55ce60e5.png"},{nome:"Bike",valor:700,peso:2,icon:I+"687ecb20e0027.png"}]},
+  {id:"super10",nome:"Super Premios 10",desc:"Premios de alto valor ate R$10.000!",custo:10,maxPremio:10000,badge:"R$10,00",cor:"#0a1a00",emoji:"??",banner:B+"68a4ee1887192.png",premios:[{nome:"Nao foi dessa vez",valor:0,peso:55,icon:""},{nome:"Tablet",valor:700,peso:15,icon:I+"68a4e6394df00.png"},{nome:"Apple Watch",valor:1500,peso:8,icon:I+"68a4e6578540a.png"},{nome:"TV 55 polegadas",valor:2000,peso:10,icon:I+"68a4e66f77942.png"},{nome:"Apple Watch Ultra",valor:9000,peso:5,icon:I+"68a4f0d0395b4.png"},{nome:"Geladeira Frost Free",valor:5000,peso:3,icon:I+"68a4f189b3094.png"},{nome:"Moto Honda Pop",valor:10000,peso:4,icon:I+"68a4f4fae1b23.png"}]},
+  {id:"luxo",nome:"Luxo",desc:"O maximo em premios, ate R$20.000!",custo:20,maxPremio:20000,badge:"R$20,00",cor:"#1a1000",emoji:"??",banner:B+"68a4f33f25aca.png",premios:[{nome:"Nao foi dessa vez",valor:0,peso:55,icon:""},{nome:"Perfume Dior",valor:500,peso:15,icon:I+"68cc9fcf9f959.png"},{nome:"Kit Kerastase Cabelo",valor:1000,peso:10,icon:I+"68cc9f94ab5b5.png"},{nome:"Iphone 15 Pro Max",valor:9000,peso:8,icon:I+"68a4f4b43cded.png"},{nome:"Moto Honda 160",valor:17000,peso:5,icon:I+"68a4f5b3b7416.png"},{nome:"Quadriciclo",valor:20000,peso:2,icon:I+"68a4f5947d0f9.png"}]}
+];
+let user=null,saldo=0,jogoAtual=null,resultado=null,scratchDone=false;
+const fmt=v=>Number(v).toFixed(2).replace('.',',');
+function toast(msg,t='info'){const el=document.getElementById('toast');el.textContent=msg;el.className='toast toast-'+t;setTimeout(()=>el.classList.add('hidden'),3500);}
+function buildTicker(){
+  const track=document.getElementById('ticker-track');if(!track)return;
+  const items=[...TICKER,...TICKER];
+  track.innerHTML=items.map(t=>`<div class="ticker-item"><img src="${t.icon}" onerror="this.style.display='none'" alt=""/><span>${t.nome} ganhou</span><strong>${t.premio} ${t.val}</strong></div>`).join('');
+}
+const authTO=setTimeout(()=>{window.location.href='login.html';},6000);
+onAuthStateChanged(auth,async u=>{
+  clearTimeout(authTO);
+  if(!u){window.location.href='login.html';return;}
+  user=u;window._userName=u.displayName||u.email||"Jogador";
+  try{const s=await getDoc(doc(db,'usuarios',u.uid));saldo=s.exists()?(s.data().saldo||0):0;}catch(e){saldo=0;}
+  updSaldo();buildTicker();renderGrid();
+  document.getElementById('loading-screen').classList.add('hidden');
+  document.getElementById('page-selector').classList.remove('hidden');
+  const p=new URLSearchParams(location.search).get('id');
+  if(p){const j=JOGOS.find(x=>x.id===p);if(j)iniciar(j);}
+});
+function updSaldo(){const v=fmt(saldo);['nav-saldo','saldo-display'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=v;});}
+function renderGrid(){
+  const g=document.getElementById('selector-grid');g.innerHTML='';
+  JOGOS.forEach(j=>{
+    const c=document.createElement('div');c.className='gsel-card';c.onclick=()=>iniciar(j);
+    c.innerHTML=`<div class="gsel-thumb" style="background:${j.cor}"><div class="gsel-fallback"><span>${j.emoji}</span><small>${j.nome}</small></div><img src="${j.banner}" alt="${j.nome}" loading="lazy" onerror="this.style.display='none'"/><span class="gsel-badge">${j.badge}</span></div><div class="gsel-body"><div class="gsel-name">${j.nome}</div><div class="gsel-prize">Ate R$ ${fmt(j.maxPremio)}</div><div class="gsel-price"><span class="gsel-val">R$ ${fmt(j.custo)}</span><button class="gsel-btn">Jogar</button></div></div>`;
+    g.appendChild(c);
+  });
+}
+function sortear(j){const tot=j.premios.reduce((s,p)=>s+p.peso,0);let r=Math.random()*tot;for(const p of j.premios){r-=p.peso;if(r<=0)return p;}return j.premios[0];}
+function iniciar(j){
+  if(saldo<j.custo){toast('Saldo insuficiente! Deposite para continuar.','error');return;}
+  jogoAtual=j;window._jogoAtual=j;resultado=sortear(j);window._resultado=resultado;scratchDone=false;
+  const bi=document.getElementById('game-banner-img');bi.src=j.banner;bi.style.display='block';
+  document.getElementById('game-banner-wrap').style.background=j.cor;
+  document.getElementById('game-badge').textContent=j.badge;
+  document.getElementById('game-title').textContent=j.nome;
+  document.getElementById('game-desc').textContent=j.desc;
+  document.getElementById('card-title').textContent=j.nome;
+  document.getElementById('card-cost').textContent=fmt(j.custo);
+  document.getElementById('panel-name').textContent=j.nome;
+  document.getElementById('panel-desc').textContent=j.desc;
+  document.getElementById('taz-msg').textContent='Raspe e descubra seu premio!';
+  document.getElementById('scratch-hint').textContent='Raspe a area acima para revelar seu premio!';
+  document.getElementById('btn-nova').style.display='none';
+  document.getElementById('btn-reveal').disabled=false;
+  document.getElementById('prize-overlay').classList.add('hidden');
+  document.getElementById('scratch-wrap').classList.remove('win-glow');
+  const tot=j.premios.reduce((s,p)=>s+p.peso,0);
+  document.getElementById('prizes-list').innerHTML=j.premios.map(p=>{
+    const pct=Math.round(p.peso/tot*100);
+    const ico=p.icon?`<img class="pi-icon" src="${p.icon}" onerror="this.style.display='none'" alt=""/>`:`<div class="pi-icon" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem">${j.emoji}</div>`;
+    return `<div class="pi">${ico}<div class="pi-info"><div class="pi-name">${p.nome}</div><div class="pi-prob">${pct}% de chance</div></div><div class="pi-val">${p.valor>0?'R$ '+fmt(p.valor):'�'}</div></div>`;
+  }).join('');
+  document.getElementById('page-selector').classList.add('hidden');
+  document.getElementById('page-game').classList.remove('hidden');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>setupCanvas(j)));
+}
+function setupCanvas(j){
+  const wrap=document.getElementById('scratch-wrap');
+  const r=wrap.getBoundingClientRect();
+  const w=r.width>0?Math.floor(r.width):480,h=300;
+  wrap.style.height=h+'px';
+  const pc=document.getElementById('prize-canvas'),sc=document.getElementById('scratch-canvas');
+  pc.width=w;pc.height=h;sc.width=w;sc.height=h;
+  pc.style.width=w+'px';pc.style.height=h+'px';
+  sc.style.width=w+'px';sc.style.height=h+'px';
+  // Draw prize canvas
+  const ctx=pc.getContext('2d');
+  ctx.fillStyle=resultado.valor>0?'#0a2a10':'#1a0808';
+  ctx.fillRect(0,0,w,h);
+  // Prize icon
+  if(resultado.icon){
+    const img=new Image();img.crossOrigin='anonymous';
+    img.onload=()=>{
+      const iw=100,ih=100,ix=(w-iw)/2,iy=(h-ih)/2-30;
+      ctx.drawImage(img,ix,iy,iw,ih);
+      drawPrizeText(ctx,w,h);
+    };
+    img.onerror=()=>drawPrizeText(ctx,w,h);
+    img.src=resultado.icon;
+  } else {drawPrizeText(ctx,w,h);}
+  // Draw scratch layer
+  const sctx=sc.getContext('2d');
+  const grad=sctx.createLinearGradient(0,0,w,h);
+  grad.addColorStop(0,'#1e1e3a');grad.addColorStop(0.5,'#2a2a4a');grad.addColorStop(1,'#1e1e3a');
+  sctx.fillStyle=grad;sctx.fillRect(0,0,w,h);
+  sctx.fillStyle='rgba(245,197,24,0.08)';
+  for(let i=0;i<8;i++){sctx.fillRect(Math.random()*w,Math.random()*h,Math.random()*60+20,Math.random()*60+20);}
+  sctx.fillStyle='rgba(255,255,255,0.05)';
+  sctx.font='bold 14px Inter,sans-serif';sctx.textAlign='center';
+  sctx.fillText('RASPE AQUI',w/2,h/2-10);sctx.fillText('SCRATCH HERE',w/2,h/2+14);
+  setupScratch(sc,sctx,w,h);
+}
+function drawPrizeText(ctx,w,h){
+  ctx.fillStyle='rgba(255,255,255,0.9)';
+  ctx.font='bold 22px Inter,sans-serif';ctx.textAlign='center';
+  if(resultado.valor>0){
+    ctx.fillText('VOCE GANHOU!',w/2,h/2+50);
+    ctx.fillStyle='#4ade80';ctx.font='bold 28px Inter,sans-serif';
+    ctx.fillText('R$ '+fmt(resultado.valor),w/2,h/2+80);
+  } else {
+    ctx.fillText('Nao foi dessa vez',w/2,h/2+50);
+  }
+}
+function setupScratch(sc,sctx,w,h){
+  sc.style.cursor='crosshair';
+  let painting=false;
+  function getPos(e){
+    const rect=sc.getBoundingClientRect();
+    const scaleX=w/rect.width,scaleY=h/rect.height;
+    if(e.touches){return{x:(e.touches[0].clientX-rect.left)*scaleX,y:(e.touches[0].clientY-rect.top)*scaleY};}
+    return{x:(e.clientX-rect.left)*scaleX,y:(e.clientY-rect.top)*scaleY};
+  }
+  function scratch(e){
+    if(!painting)return;
+    e.preventDefault();
+    const pos=getPos(e);
+    sctx.globalCompositeOperation='destination-out';
+    sctx.beginPath();sctx.arc(pos.x,pos.y,28,0,Math.PI*2);sctx.fill();
+    checkReveal(sctx,w,h);
+  }
+  sc.addEventListener('mousedown',e=>{painting=true;scratch(e);});
+  sc.addEventListener('mousemove',scratch);
+  sc.addEventListener('mouseup',()=>painting=false);
+  sc.addEventListener('mouseleave',()=>painting=false);
+  sc.addEventListener('touchstart',e=>{painting=true;scratch(e);},{passive:false});
+  sc.addEventListener('touchmove',scratch,{passive:false});
+  sc.addEventListener('touchend',()=>painting=false);
+}
+function checkReveal(sctx,w,h){
+  if(scratchDone)return;
+  const data=sctx.getImageData(0,0,w,h).data;
+  let cleared=0;
+  for(let i=3;i<data.length;i+=4){if(data[i]<128)cleared++;}
+  if(cleared/(w*h)>0.6)reveal();
+}
+window.revelarRapido=function(){
+  if(scratchDone)return;
+  const sc=document.getElementById('scratch-canvas');
+  const sctx=sc.getContext('2d');
+  sctx.clearRect(0,0,sc.width,sc.height);
+  document.getElementById('btn-reveal').disabled=true;
+  reveal();
+};
+function reveal(){
+  if(scratchDone)return;
+  scratchDone=true;window._resultado=resultado;
+  document.getElementById('btn-reveal').disabled=true;
+  const isWin=resultado.valor>0;
+  const overlay=document.getElementById('prize-overlay');
+  const bg=document.getElementById('po-bg');
+  const poImg=document.getElementById('po-img');
+  const poEmoji=document.getElementById('po-emoji');
+  const poBadge=document.getElementById('po-badge');
+  const poTitle=document.getElementById('po-title');
+  const poVal=document.getElementById('po-val');
+  const poPrizeName=document.getElementById('po-prize-name');
+  bg.className='prize-overlay-bg '+(isWin?'win':'lose');
+  if(resultado.icon){
+    poImg.src=resultado.icon;
+    poImg.classList.remove('hidden');
+    poEmoji.classList.add('hidden');
+    poImg.onerror=()=>{poImg.classList.add('hidden');poEmoji.textContent=jogoAtual.emoji;poEmoji.classList.remove('hidden');};
+  } else {
+    poEmoji.textContent=jogoAtual.emoji;
+    poEmoji.classList.remove('hidden');
+    poImg.classList.add('hidden');
+  }
+  poBadge.textContent=isWin?'VOCE GANHOU!':'Nao foi dessa vez';
+  poBadge.className='po-result-badge '+(isWin?'win':'lose');
+  poTitle.textContent=isWin?'Parabens!':'Que pena...';
+  poVal.textContent=isWin?'R$ '+fmt(resultado.valor):'R$ 0,00';
+  poVal.className='po-val '+(isWin?'win':'lose');
+  poPrizeName.textContent=resultado.nome;
+  overlay.classList.remove('hidden');
+  if(isWin){
+    document.getElementById('scratch-wrap').classList.add('win-glow');
+    document.getElementById('taz-msg').textContent='Parabens! Voce ganhou '+resultado.nome+'!';
+    lancarConfetti();
+    mostrarNotifVitoria();
+  } else {
+    document.getElementById('taz-msg').textContent='Nao foi dessa vez. Tente novamente!';
+  }
+  document.getElementById('btn-nova').style.display='block';
+  document.getElementById('scratch-hint').textContent='';
+  salvarResultado(isWin);
+}
+async function salvarResultado(isWin){
+  if(!user||!jogoAtual)return;
+  try{
+    const novoSaldo=saldo-jogoAtual.custo+(isWin?resultado.valor:0);
+    await updateDoc(doc(db,'usuarios',user.uid),{saldo:novoSaldo});
+    await addDoc(collection(db,'transacoes'),{uid:user.uid,tipo:'jogo',jogo:jogoAtual.nome,custo:jogoAtual.custo,premio:resultado.nome,valor:resultado.valor,ganhou:isWin,icone:resultado.icon||'',saldoAntes:saldo,saldoDepois:novoSaldo,data:serverTimestamp()});
+    saldo=novoSaldo;updSaldo();
+  }catch(e){console.error('Erro ao salvar:',e);}
+}
+function lancarConfetti(){
+  const colors=['#f5c518','#4ade80','#60a5fa','#f87171','#a78bfa'];
+  for(let i=0;i<80;i++){
+    const el=document.createElement('div');el.className='confetti-p';
+    el.style.cssText=`left:${Math.random()*100}vw;top:-10px;width:${Math.random()*8+4}px;height:${Math.random()*8+4}px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*1}s;animation-duration:${Math.random()*1.5+2}s`;
+    document.body.appendChild(el);setTimeout(()=>el.remove(),3500);
+  }
+}
+window.novaRaspadinha=function(){
+  if(!jogoAtual)return;
+  iniciar(jogoAtual);
+};
+window.voltarSelector=function(){
+  document.getElementById('page-game').classList.add('hidden');
+  document.getElementById('page-selector').classList.remove('hidden');
+  jogoAtual=null;resultado=null;scratchDone=false;
+};
+
+// ===== SOM DE RASPAR =====
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+function playScratchSound() {
+  try {
+    const ctx = getAudioCtx();
+    const buf = ctx.createBuffer(1, ctx.sampleRate * 0.06, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / data.length) * 0.4;
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass'; filter.frequency.value = 1400; filter.Q.value = 0.6;
+    const gain = ctx.createGain(); gain.gain.value = 0.25;
+    src.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+    src.start();
+  } catch(e) {}
+}
+function playWinSound() {
+  try {
+    const ctx = getAudioCtx();
+    [523, 659, 784, 1047].forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.frequency.value = freq; osc.type = 'sine';
+      gain.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.3);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + i * 0.12);
+      osc.stop(ctx.currentTime + i * 0.12 + 0.35);
+    });
+  } catch(e) {}
+}
+
+// ===== SISTEMA DE NIVEL =====
+function calcNivel(jogadas) {
+  if (jogadas >= 200) return { nome: 'Diamante', emoji: 'D', cor: '#38bdf8', next: null, prog: 100 };
+  if (jogadas >= 100) return { nome: 'Ouro', emoji: 'O', cor: '#f5c518', next: 200, prog: Math.round((jogadas-100)/100*100) };
+  if (jogadas >= 50)  return { nome: 'Prata', emoji: 'P', cor: '#aaa', next: 100, prog: Math.round((jogadas-50)/50*100) };
+  if (jogadas >= 10)  return { nome: 'Bronze', emoji: 'B', cor: '#cd7f32', next: 50, prog: Math.round((jogadas-10)/40*100) };
+  return { nome: 'Iniciante', emoji: 'I', cor: '#888', next: 10, prog: Math.round(jogadas/10*100) };
+}
+
+// ===== POP-UP BONUS SALDO ZERADO =====
+function mostrarPopupBonus() {
+  if (document.getElementById('popup-bonus')) return;
+  const popup = document.createElement('div');
+  popup.id = 'popup-bonus';
+  popup.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9990;display:flex;align-items:center;justify-content:center;padding:20px';
+  popup.innerHTML = '<div style="background:#13132b;border:2px solid #f5c518;border-radius:24px;padding:36px 28px;max-width:380px;width:100%;text-align:center"><div style="font-size:3rem;margin-bottom:12px">&#128184;</div><h2 style="font-size:1.4rem;font-weight:900;color:#f5c518;margin-bottom:8px">Saldo Zerado!</h2><p style="color:#888;font-size:.9rem;margin-bottom:20px;line-height:1.6">Que tal um <strong style="color:#4ade80">bonus de 100%</strong> no seu proximo deposito? Deposite agora e dobre seu saldo!</p><div style="background:rgba(245,197,24,.08);border:1px solid rgba(245,197,24,.2);border-radius:14px;padding:16px;margin-bottom:20px"><div style="font-size:2rem;font-weight:900;color:#f5c518">+100%</div><div style="font-size:.8rem;color:#888;margin-top:4px">Bonus no primeiro deposito</div></div><a href="deposito.html" style="display:block;background:linear-gradient(135deg,#f5c518,#d4a017);color:#0b0b18;border-radius:12px;padding:14px;font-size:1rem;font-weight:900;text-decoration:none;margin-bottom:10px">Depositar Agora</a><button onclick="document.getElementById(\'popup-bonus\').remove()" style="background:transparent;border:none;color:#555;font-size:.85rem;cursor:pointer;font-family:Inter,sans-serif;padding:8px">Agora nao</button></div>';
+  document.body.appendChild(popup);
+}
+</script>
+<a href="https://t.me/Tazz_7x" target="_blank" rel="noopener" style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#0088cc;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,136,204,.5);text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" title="Suporte via Telegram"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+<script>
+function mostrarNotifVitoria(){
+  if(!window._jogoAtual||!window._resultado)return;
+  const notif=document.getElementById('win-notif');
+  if(!notif)return;
+  const nome=window._userName||'Voce';
+  const mascarado=nome.length>3?nome.substring(0,3)+'***':nome;
+  const icon=window._resultado.icon||'';
+  const premio=window._resultado.nome||'Premio';
+  const val='R$ '+Number(window._resultado.valor).toLocaleString('pt-BR',{minimumFractionDigits:2});
+  document.getElementById('wn-img').src=icon;
+  document.getElementById('wn-nome').textContent=mascarado+' ganhou!';
+  document.getElementById('wn-premio').textContent=premio;
+  document.getElementById('wn-val').textContent=val;
+  notif.style.transform='translateX(0)';
+  clearTimeout(notif._t);
+  notif._t=setTimeout(()=>{notif.style.transform='translateX(-320px)';},5000);
+}
+</script>
+<div id="win-notif" style="position:fixed;bottom:96px;left:20px;z-index:9998;background:#13132b;border:1px solid rgba(245,197,24,.35);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:12px;max-width:280px;box-shadow:0 8px 32px rgba(0,0,0,.5);transform:translateX(-320px);transition:transform .4s cubic-bezier(.175,.885,.32,1.275)"><img id="wn-img" src="" style="width:40px;height:40px;object-fit:contain;border-radius:8px;background:#0b0b18;flex-shrink:0"/><div><div id="wn-nome" style="font-size:.8rem;font-weight:800;color:#fff"></div><div id="wn-premio" style="font-size:.72rem;color:#888;margin-top:2px"></div><div id="wn-val" style="font-size:.85rem;font-weight:900;color:#4ade80;margin-top:2px"></div></div></div>
+<script>
+(function(){
+  const I='https://raspadinhaum7d.online/assets/img/icons/';
+  const winners=[
+    {nome:'Bianca R**',premio:'Quadriciclo',val:'R$ 20.000',icon:I+'68a4f5947d0f9.png'},
+    {nome:'Carla C***',premio:'Moto Honda 160',val:'R$ 17.000',icon:I+'68a4f5b3b7416.png'},
+    {nome:'Fernanda A**',premio:'Iphone 17 Pro Max',val:'R$ 14.000',icon:I+'68cec0a9433fd.png'},
+    {nome:'Lucas T***',premio:'PlayStation 5',val:'R$ 4.500',icon:I+'68a4f4dff349b.png'},
+    {nome:'Ana R***',premio:'Bolsa Gucci',val:'R$ 4.000',icon:I+'68cca3466602f.png'},
+    {nome:'Rafael C***',premio:'Apple Watch Ultra',val:'R$ 9.000',icon:I+'68a4f0d0395b4.png'},
+    {nome:'Joao P**',premio:'R$ 500 no PIX',val:'R$ 500',icon:I+'68a4f0ebdd355.png'},
+    {nome:'Vitoria D**',premio:'Iphone 17',val:'R$ 10.000',icon:I+'68cec141b00a6.png'},
+    {nome:'Gabriel R**',premio:'Xbox Series X',val:'R$ 4.200',icon:I+'68a4f4cc597ff.png'},
+    {nome:'Beatriz S***',premio:'Iphone 15 Pro Max',val:'R$ 9.000',icon:I+'68a4f4b43cded.png'}
+  ];
+  const notif=document.getElementById('win-notif');
+  let idx=0;
+  function showNext(){
+    const w=winners[idx%winners.length];idx++;
+    document.getElementById('wn-img').src=w.icon;
+    document.getElementById('wn-nome').textContent=w.nome+' ganhou!';
+    document.getElementById('wn-premio').textContent=w.premio;
+    document.getElementById('wn-val').textContent=w.val;
+    notif.style.transform='translateX(0)';
+    setTimeout(()=>{notif.style.transform='translateX(-320px)';},4500);
+  }
+  setTimeout(()=>{showNext();setInterval(showNext,12000);},6000);
+})();
+</script>
+</body>
+</html>

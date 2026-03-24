@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Raspaetz7 - Painel de Afiliado</title>
+<link rel="stylesheet" href="style.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+.afil-page{max-width:900px;margin:0 auto;padding:32px 20px 80px}
+.afil-hero{background:linear-gradient(135deg,#13132b,#0d0d1f);border:1px solid #1e1e3a;border-radius:20px;padding:32px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.afil-hero-left h1{font-size:1.6rem;font-weight:900;color:#fff;margin-bottom:6px}
+.afil-hero-left h1 span{color:#f5c518}
+.afil-hero-left p{color:#888;font-size:.9rem}
+.afil-hero-badge{background:linear-gradient(135deg,#f5c518,#d4a017);color:#0b0b18;font-size:1rem;font-weight:900;padding:10px 24px;border-radius:12px;white-space:nowrap}
+.afil-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.afil-stat{background:#13132b;border:1px solid #1e1e3a;border-radius:16px;padding:20px;text-align:center}
+.afil-stat-val{font-size:1.6rem;font-weight:900;color:#f5c518;display:block;margin-bottom:4px}
+.afil-stat-lbl{font-size:.72rem;color:#666;text-transform:uppercase;letter-spacing:.5px}
+.afil-tabs{display:flex;gap:4px;background:#0b0b18;border:1px solid #1e1e3a;border-radius:12px;padding:4px;margin-bottom:20px;flex-wrap:wrap}
+.afil-tab{flex:1;padding:10px 16px;border:none;background:transparent;color:#666;font-size:.85rem;font-weight:700;cursor:pointer;border-radius:8px;font-family:Inter,sans-serif;transition:all .2s;white-space:nowrap}
+.afil-tab.active{background:#13132b;color:#f5c518;border:1px solid #1e1e3a}
+.afil-panel{display:none}
+.afil-panel.active{display:block}
+.afil-card{background:#13132b;border:1px solid #1e1e3a;border-radius:20px;padding:24px;margin-bottom:16px}
+.afil-card h3{font-size:.95rem;font-weight:800;color:#f5c518;margin-bottom:16px}
+.link-box{background:#0b0b18;border:1.5px solid rgba(245,197,24,.3);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.link-row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.link-val{color:#f5c518;font-size:.85rem;font-weight:700;word-break:break-all;flex:1}
+.btn-copy{background:#1e1e3a;border:1px solid #2a2a4a;color:#ccc;padding:8px 16px;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s;font-family:Inter,sans-serif}
+.btn-copy:hover{border-color:#f5c518;color:#f5c518}
+.share-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn-share{padding:10px 20px;border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;border:none;font-family:Inter,sans-serif;transition:opacity .2s}
+.btn-share-wa{background:#25d366;color:#fff}
+.btn-share-tg{background:#0088cc;color:#fff}
+.btn-share:hover{opacity:.85}
+.afil-list{display:flex;flex-direction:column;gap:8px;max-height:400px;overflow-y:auto}
+.afil-item{background:#0b0b18;border:1px solid #1e1e3a;border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.afil-item-name{font-size:.88rem;font-weight:700;color:#ccc}
+.afil-item-sub{font-size:.75rem;color:#555;margin-top:3px}
+.badge-ativo{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);color:#4ade80;font-size:.7rem;font-weight:800;padding:3px 10px;border-radius:20px}
+.badge-cad{background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.2);color:#f5c518;font-size:.7rem;font-weight:800;padding:3px 10px;border-radius:20px}
+.comissao-val{font-size:.82rem;font-weight:800;color:#4ade80;margin-top:4px}
+.empty-msg{color:#555;font-size:.85rem;text-align:center;padding:32px 0}
+.saque-form{display:flex;flex-direction:column;gap:14px}
+.saque-saldo-box{background:#0b0b18;border:1px solid #1e1e3a;border-radius:14px;padding:20px;text-align:center;margin-bottom:8px}
+.saque-saldo-box span{font-size:.8rem;color:#666;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px}
+.saque-saldo-box strong{font-size:2rem;font-weight:900;color:#4ade80}
+.info-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1e1e3a;font-size:.85rem}
+.info-row:last-child{border-bottom:none}
+.info-row span:first-child{color:#666}
+.info-row span:last-child{color:#ccc;font-weight:700}
+@media(max-width:700px){.afil-stats{grid-template-columns:1fr 1fr}.afil-hero{flex-direction:column}}
+@media(max-width:480px){.afil-stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><img src="https://raspadinhaum7d.online/assets/upload/68e26d2c4d315.png" alt="Raspaetz7"/></a>
+    <div class="nav-user">
+      <div class="nav-saldo-wrap">
+        <span class="nav-saldo-label">Comissão</span>
+        <span class="nav-saldo-val" style="color:#4ade80">R$ <span id="nav-comissao">0,00</span></span>
+      </div>
+      <a href="dashboard.html" class="btn btn-outline">Minha Conta</a>
+    </div>
+  </div>
+</nav>
+
+<div id="loading-afil" style="text-align:center;padding:80px 0;color:#666">
+  <div style="width:40px;height:40px;border:3px solid #1e1e3a;border-top-color:#f5c518;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px"></div>
+  <p>Carregando painel...</p>
+</div>
+
+<div id="afil-content" class="hidden afil-page">
+
+  <!-- HERO -->
+  <div class="afil-hero">
+    <div class="afil-hero-left">
+      <h1>Painel de <span>Afiliado</span></h1>
+      <p>Indique amigos e ganhe 70% de comissão sobre cada depósito deles.</p>
+    </div>
+    <div class="afil-hero-badge">70% de Comissão</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="afil-stats">
+    <div class="afil-stat">
+      <span class="afil-stat-val" id="stat-cadastros">0</span>
+      <span class="afil-stat-lbl">Cadastros</span>
+    </div>
+    <div class="afil-stat">
+      <span class="afil-stat-val" id="stat-ativos">0</span>
+      <span class="afil-stat-lbl">Ativos</span>
+    </div>
+    <div class="afil-stat">
+      <span class="afil-stat-val" id="stat-depositado">R$ 0</span>
+      <span class="afil-stat-lbl">Total Depositado</span>
+    </div>
+    <div class="afil-stat">
+      <span class="afil-stat-val" id="stat-comissao" style="color:#4ade80">R$ 0</span>
+      <span class="afil-stat-lbl">Comissão (70%)</span>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="afil-tabs">
+    <button class="afil-tab active" onclick="switchAfil('link',this)">Meu Link</button>
+    <button class="afil-tab" onclick="switchAfil('indicados',this)">Indicados</button>
+    <button class="afil-tab" onclick="switchAfil('saque',this)">Sacar Comissão</button>
+    <button class="afil-tab" onclick="switchAfil('como',this)">Como Funciona</button>
+  </div>
+
+  <!-- PANEL: LINK -->
+  <div class="afil-panel active" id="panel-link">
+    <div class="afil-card">
+      <h3>Seu Link de Indicação</h3>
+      <div class="link-box">
+        <div style="font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.5px">Link pessoal</div>
+        <div class="link-row">
+          <span class="link-val" id="link-afil">—</span>
+          <button class="btn-copy" onclick="copiarLink()">Copiar</button>
+        </div>
+      </div>
+      <p style="font-size:.82rem;color:#888;margin-bottom:14px">Quando alguém se cadastrar pelo seu link e depositar, você recebe <strong style="color:#f5c518">70% do valor depositado</strong> como comissão.</p>
+      <div class="share-btns">
+        <button class="btn-share btn-share-wa" onclick="compartilharWA()">WhatsApp</button>
+        <button class="btn-share btn-share-tg" onclick="compartilharTG()">Telegram</button>
+        <button class="btn-share" style="background:#1e1e3a;color:#ccc;border:1px solid #2a2a4a" onclick="copiarLink()">Copiar Link</button>
+      </div>
+    </div>
+    <div class="afil-card">
+      <h3>Sugestão de mensagem</h3>
+      <div style="background:#0b0b18;border:1px solid #1e1e3a;border-radius:12px;padding:16px;font-size:.85rem;color:#aaa;line-height:1.7" id="msg-sugestao">
+        Carregando...
+      </div>
+      <button class="btn-copy" style="margin-top:12px" onclick="copiarMensagem()">Copiar mensagem</button>
+    </div>
+  </div>
+
+  <!-- PANEL: INDICADOS -->
+  <div class="afil-panel" id="panel-indicados">
+    <div class="afil-card">
+      <h3>Pessoas indicadas por você</h3>
+      <div class="afil-list" id="afil-list">
+        <div class="empty-msg">Nenhum cadastro via seu link ainda.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: SAQUE -->
+  <div class="afil-panel" id="panel-saque">
+    <div class="afil-card">
+      <h3>Sacar Comissão</h3>
+      <div class="saque-saldo-box">
+        <span>Comissão disponível para saque</span>
+        <strong id="saque-comissao-val">R$ 0,00</strong>
+      </div>
+      <div class="saque-form">
+        <div class="field-group">
+          <label>Valor a sacar (R$)</label>
+          <div class="field-wrap valor-input-wrap">
+            <span class="valor-prefix">R$</span>
+            <input type="number" id="input-saque-afil" placeholder="0,00" min="20"/>
+          </div>
+          <small style="color:#555;font-size:.78rem">Mínimo: R$ 20,00</small>
+        </div>
+        <div class="field-group">
+          <label>Chave PIX</label>
+          <div class="field-wrap">
+            <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span>
+            <input type="text" id="input-pix-afil" placeholder="E-mail, CPF ou telefone"/>
+          </div>
+        </div>
+        <button class="btn-pag" id="btn-saque-afil" onclick="sacarComissao()">Solicitar Saque de Comissão</button>
+      </div>
+      <div style="margin-top:20px">
+        <h3 style="margin-bottom:12px">Histórico de saques</h3>
+        <div id="hist-saques-afil" class="afil-list">
+          <div class="empty-msg">Nenhum saque ainda.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: COMO FUNCIONA -->
+  <div class="afil-panel" id="panel-como">
+    <div class="afil-card">
+      <h3>Como funciona o programa de afiliados</h3>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:8px">
+        <div style="display:flex;gap:16px;align-items:flex-start">
+          <div style="width:36px;height:36px;background:linear-gradient(135deg,#f5c518,#d4a017);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0b0b18;flex-shrink:0">1</div>
+          <div><p style="font-weight:800;color:#fff;margin-bottom:4px">Compartilhe seu link</p><p style="font-size:.85rem;color:#888">Envie seu link de indicação para amigos pelo WhatsApp, Telegram ou redes sociais.</p></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start">
+          <div style="width:36px;height:36px;background:linear-gradient(135deg,#f5c518,#d4a017);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0b0b18;flex-shrink:0">2</div>
+          <div><p style="font-weight:800;color:#fff;margin-bottom:4px">Amigo se cadastra e deposita</p><p style="font-size:.85rem;color:#888">Quando seu indicado criar conta pelo seu link e fizer um depósito, a comissão é calculada automaticamente.</p></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start">
+          <div style="width:36px;height:36px;background:linear-gradient(135deg,#f5c518,#d4a017);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0b0b18;flex-shrink:0">3</div>
+          <div><p style="font-weight:800;color:#fff;margin-bottom:4px">Você recebe 70% de comissão</p><p style="font-size:.85rem;color:#888">70% do valor depositado pelo seu indicado vai direto para sua comissão. A casa retém apenas 30%.</p></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start">
+          <div style="width:36px;height:36px;background:linear-gradient(135deg,#f5c518,#d4a017);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0b0b18;flex-shrink:0">4</div>
+          <div><p style="font-weight:800;color:#fff;margin-bottom:4px">Saque quando quiser</p><p style="font-size:.85rem;color:#888">Solicite o saque da sua comissão a qualquer momento via PIX. Mínimo de R$ 20,00.</p></div>
+        </div>
+      </div>
+      <div style="background:#0b0b18;border:1px solid rgba(245,197,24,.2);border-radius:14px;padding:20px;margin-top:20px">
+        <div class="info-row"><span>Comissão por indicado</span><span style="color:#f5c518">70% do depósito</span></div>
+        <div class="info-row"><span>Saque mínimo</span><span>R$ 20,00</span></div>
+        <div class="info-row"><span>Prazo de pagamento</span><span>Até 24 horas</span></div>
+        <div class="info-row"><span>Limite de indicados</span><span style="color:#4ade80">Ilimitado</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, addDoc, updateDoc, collection, query, where, getDocs, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyCXB1Y1dqo0nCiNUEJ5eBwVNRUp2RIEqHk",
+  authDomain: "raspa-979d4.firebaseapp.com",
+  projectId: "raspa-979d4",
+  storageBucket: "raspa-979d4.firebasestorage.app",
+  messagingSenderId: "686362667379",
+  appId: "1:686362667379:web:d7d72dd87129818ee2bd06"
+});
+const auth = getAuth(app);
+const db = getFirestore(app);
+let myLink = '', currentUser = null, comissaoTotal = 0;
+
+function fmt(v) { return Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 }); }
+function fmtData(ts) {
+  if (!ts) return '—';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+function showToast(msg, ok) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast' + (ok === false ? ' toast-error' : '');
+  t.classList.remove('hidden');
+  setTimeout(() => t.classList.add('hidden'), 3500);
+}
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { window.location.href = 'login.html'; return; }
+  currentUser = user;
+  const snap = await getDoc(doc(db, 'usuarios', user.uid));
+  const dados = snap.data() || {};
+  const base = window.location.origin + '/cadastro.html';
+  myLink = base + '?ref=' + user.uid;
+  document.getElementById('link-afil').textContent = myLink;
+  document.getElementById('msg-sugestao').textContent =
+    '🎰 Ei! Descobri esse site de raspadinha incrível com prêmios de até R$ 20.000! Cadastre-se pelo meu link e tente a sorte: ' + myLink;
+  await carregarIndicados(user.uid);
+  carregarSaquesAfil(user.uid);
+  document.getElementById('loading-afil').style.display = 'none';
+  document.getElementById('afil-content').classList.remove('hidden');
+});
+
+async function carregarIndicados(uid) {
+  try {
+    const q = query(collection(db, 'usuarios'), where('refBy', '==', uid));
+    const snap = await getDocs(q);
+    document.getElementById('stat-cadastros').textContent = snap.size;
+    if (snap.empty) return;
+    let ativos = 0, totalDep = 0;
+    const lista = document.getElementById('afil-list');
+    lista.innerHTML = '';
+    snap.docs.sort((a,b) => (b.data().criadoEm?.seconds||0) - (a.data().criadoEm?.seconds||0)).forEach(d => {
+      const u = d.data();
+      const dep = u.totalDepositado || 0;
+      totalDep += dep;
+      if ((u.jogadas || 0) > 0) ativos++;
+      const nome = u.nome || u.email || 'Usuário';
+      const mascarado = nome.length > 3 ? nome.substring(0,3) + '***' : nome;
+      const comissao = dep * 0.70;
+      const item = document.createElement('div');
+      item.className = 'afil-item';
+      item.innerHTML = `
+        <div>
+          <div class="afil-item-name">${mascarado}</div>
+          <div class="afil-item-sub">${fmtData(u.criadoEm)} · Depositou: R$ ${fmt(dep)}</div>
+        </div>
+        <div style="text-align:right">
+          <span class="${(u.jogadas||0)>0?'badge-ativo':'badge-cad'}">${(u.jogadas||0)>0?'Ativo':'Cadastrado'}</span>
+          <div class="comissao-val">+R$ ${fmt(comissao)}</div>
+        </div>`;
+      lista.appendChild(item);
+    });
+    comissaoTotal = totalDep * 0.70;
+    document.getElementById('stat-ativos').textContent = ativos;
+    document.getElementById('stat-depositado').textContent = 'R$ ' + fmt(totalDep);
+    document.getElementById('stat-comissao').textContent = 'R$ ' + fmt(comissaoTotal);
+    document.getElementById('nav-comissao').textContent = fmt(comissaoTotal);
+    document.getElementById('saque-comissao-val').textContent = 'R$ ' + fmt(comissaoTotal);
+  } catch(e) { console.error(e); }
+}
+
+function carregarSaquesAfil(uid) {
+  const lista = document.getElementById('hist-saques-afil');
+  const q = query(collection(db, 'saques'), where('uid','==',uid), where('tipo','==','comissao'));
+  onSnapshot(q, snap => {
+    if (snap.empty) { lista.innerHTML = '<div class="empty-msg">Nenhum saque ainda.</div>'; return; }
+    const docs = snap.docs.sort((a,b) => (b.data().criadoEm?.seconds||0)-(a.data().criadoEm?.seconds||0));
+    lista.innerHTML = docs.map(d => {
+      const s = d.data();
+      const statusColor = s.status==='aprovado'?'#4ade80':s.status==='recusado'?'#f87171':'#f5c518';
+      return `<div class="afil-item">
+        <div>
+          <div class="afil-item-name">Saque de comissão</div>
+          <div class="afil-item-sub">${fmtData(s.criadoEm)} · PIX: ${s.pixChave||'—'}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:.9rem;font-weight:800;color:#4ade80">R$ ${fmt(s.valor)}</div>
+          <div style="font-size:.72rem;font-weight:800;color:${statusColor};margin-top:4px">${s.status||'pendente'}</div>
+        </div>
+      </div>`;
+    }).join('');
+  });
+}
+
+window.sacarComissao = async function() {
+  const valor = parseFloat(document.getElementById('input-saque-afil').value);
+  const pix = document.getElementById('input-pix-afil').value.trim();
+  const btn = document.getElementById('btn-saque-afil');
+  if (!valor || valor < 20) return showToast('Valor mínimo: R$ 20,00', false);
+  if (valor > comissaoTotal) return showToast('Valor maior que sua comissão disponível', false);
+  if (!pix) return showToast('Informe sua chave PIX', false);
+  btn.disabled = true; btn.textContent = 'Processando...';
+  try {
+    await addDoc(collection(db, 'saques'), {
+      uid: currentUser.uid, valor, pixChave: pix, tipo: 'comissao',
+      status: 'pendente', criadoEm: serverTimestamp()
+    });
+    showToast('✅ Saque de comissão solicitado! Até 24h.', true);
+    document.getElementById('input-saque-afil').value = '';
+  } catch(e) { showToast('Erro ao solicitar saque.', false); }
+  btn.disabled = false; btn.textContent = 'Solicitar Saque de Comissão';
+};
+
+window.copiarLink = function() {
+  navigator.clipboard.writeText(myLink);
+  showToast('✅ Link copiado!');
+};
+window.copiarMensagem = function() {
+  const msg = document.getElementById('msg-sugestao').textContent;
+  navigator.clipboard.writeText(msg);
+  showToast('✅ Mensagem copiada!');
+};
+window.compartilharWA = function() {
+  const msg = encodeURIComponent('🎰 Jogue raspadinha e ganhe prêmios de até R$20.000! Cadastre-se: ' + myLink);
+  window.open('https://wa.me/?text=' + msg, '_blank');
+};
+window.compartilharTG = function() {
+  window.open('https://t.me/share/url?url=' + encodeURIComponent(myLink) + '&text=' + encodeURIComponent('🎰 Jogue raspadinha e ganhe prêmios de até R$20.000!'), '_blank');
+};
+window.switchAfil = function(tab, btn) {
+  document.querySelectorAll('.afil-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.afil-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  btn.classList.add('active');
+};
+</script>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+<a href="https://t.me/Tazz_7x" target="_blank" rel="noopener" style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#0088cc;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,136,204,.5);text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" title="Suporte via Telegram"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+</body>
+</html>

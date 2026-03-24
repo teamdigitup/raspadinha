@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raspaetz7 - Minha Conta</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>@keyframes popIn{0%{transform:scale(0) rotate(-10deg);opacity:0}100%{transform:scale(1) rotate(0deg);opacity:1}}</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><img src="https://raspadinhaum7d.online/assets/upload/68e26d2c4d315.png" alt="Raspaetz7"/></a>
+    <div class="nav-user" id="nav-user">
+      <div class="nav-saldo-wrap">
+        <span class="nav-saldo-label">Saldo</span>
+        <span class="nav-saldo-val">R$ <span id="nav-saldo-val">...</span></span>
+      </div>
+      <a href="deposito.html" class="btn btn-outline">+ Depositar</a>
+      <button class="btn btn-primary" id="btn-logout">Sair</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Loading -->
+<div id="loading-screen" class="dash-loading">
+  <div class="dash-loading-inner">
+    <div class="dash-loading-spinner"></div>
+    <p>Carregando sua conta...</p>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div class="dash-page hidden" id="dash-content">
+  <div class="dash-wrap">
+
+    <!-- PERFIL HEADER -->
+    <div class="dash-profile-card">
+      <div class="dash-profile-left">
+        <div class="dash-avatar-wrap" id="avatar-wrap">
+          <img id="dash-avatar-img" src="" alt="Foto de perfil" class="dash-avatar-img hidden"/>
+          <div class="dash-avatar-placeholder" id="dash-avatar-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <label class="dash-avatar-edit" for="input-foto" title="Alterar foto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0b0b18" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </label>
+          <input type="file" id="input-foto" accept="image/*" style="display:none"/>
+        </div>
+        <div class="dash-profile-info">
+          <h2 id="dash-nome">—</h2>
+          <p id="dash-email"></p>
+          <div class="dash-member-badge">Membro Raspaetz7</div>
+
+        </div>
+      </div>
+      <div class="dash-profile-right">
+        <div class="dash-saldo-big">
+          <span>Saldo disponível</span>
+          <strong id="dash-saldo">R$ 0,00</strong>
+        </div>
+        <div class="dash-profile-actions">
+          <a href="deposito.html" class="btn btn-primary">Depositar</a>
+          <a href="saque.html" class="btn btn-outline">Sacar</a>
+          <a href="jogar.html" class="btn btn-outline">Jogar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="dash-stats">
+      <div class="dash-stat-card">
+        <div class="dash-stat-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="dash-stat-info">
+          <span>Raspadinhas jogadas</span>
+          <strong id="dash-jogadas">0</strong>
+        </div>
+      </div>
+      <div class="dash-stat-card">
+        <div class="dash-stat-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="dash-stat-info">
+          <span>Total ganho</span>
+          <strong id="dash-ganho" style="color:#4ade80">R$ 0,00</strong>
+        </div>
+      </div>
+      <div class="dash-stat-card">
+        <div class="dash-stat-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg></div>
+        <div class="dash-stat-info">
+          <span>Depositos realizados</span>
+          <strong id="dash-num-depositos">0</strong>
+        </div>
+      </div>
+      <div class="dash-stat-card">
+        <div class="dash-stat-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 17 12 21 8 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg></div>
+        <div class="dash-stat-info">
+          <span>Saques solicitados</span>
+          <strong id="dash-num-saques">0</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="dash-tabs">
+      <button class="dash-tab active" onclick="switchTab('apostas', this)">Apostas</button>
+      <button class="dash-tab" onclick="switchTab('depositos', this)">Depositos</button>
+      <button class="dash-tab" onclick="switchTab('saques', this)">Saques</button>
+      <button class="dash-tab" onclick="switchTab('ranking', this)">Ranking</button>
+      <button class="dash-tab" onclick="switchTab('perfil', this)">Perfil</button>
+    </div>
+
+    <!-- TAB: APOSTAS -->
+    <div class="dash-tab-content" id="tab-apostas">
+      <div class="dash-section">
+        <div class="dash-section-header">
+          <h3>Historico de Apostas</h3>
+          <span id="apostas-count" class="dash-count-badge">0 registros</span>
+        </div>
+        <div id="lista-apostas" class="dash-lista">
+          <div class="dash-empty">Nenhuma aposta ainda. <a href="jogar.html">Jogar agora →</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: DEPÓSITOS -->
+    <div class="dash-tab-content hidden" id="tab-depositos">
+      <div class="dash-section">
+        <div class="dash-section-header">
+          <h3>Historico de Depositos</h3>
+          <span id="depositos-count" class="dash-count-badge">0 registros</span>
+        </div>
+        <div id="lista-depositos" class="dash-lista">
+          <div class="dash-empty">Nenhum depósito ainda. <a href="deposito.html">Depositar agora →</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: SAQUES -->
+    <div class="dash-tab-content hidden" id="tab-saques">
+      <div class="dash-section">
+        <div class="dash-section-header">
+          <h3>Historico de Saques</h3>
+          <span id="saques-count" class="dash-count-badge">0 registros</span>
+        </div>
+        <div id="lista-saques" class="dash-lista">
+          <div class="dash-empty">Nenhum saque ainda. <a href="saque.html">Sacar agora →</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: RANKING -->
+    <div class="dash-tab-content hidden" id="tab-ranking">
+      <div class="dash-section">
+        <div class="dash-section-header">
+          <h3>🏆 Maiores Ganhadores</h3>
+          <span class="dash-count-badge">Top 10</span>
+        </div>
+        <div id="lista-ranking" class="dash-lista">
+          <div class="dash-empty">Carregando ranking...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: PERFIL -->
+    <div class="dash-tab-content hidden" id="tab-perfil">
+      <div class="dash-section">
+        <h3>Configuracoes do Perfil</h3>
+
+        <div class="perfil-foto-section">
+          <div class="perfil-foto-preview">
+            <img id="perfil-foto-preview-img" src="" alt="" class="hidden"/>
+            <div id="perfil-foto-placeholder" class="perfil-foto-ph">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          </div>
+          <div class="perfil-foto-info">
+            <p>Foto de perfil</p>
+            <small>JPG, PNG ou GIF. Máximo 2MB.</small>
+            <label class="btn btn-outline" for="input-foto-perfil" style="cursor:pointer;margin-top:8px;display:inline-flex">
+              Alterar foto
+            </label>
+            <input type="file" id="input-foto-perfil" accept="image/*" style="display:none"/>
+          </div>
+        </div>
+
+        <div class="perfil-fields">
+          <div class="field-group">
+            <label>Nome completo</label>
+            <div class="field-wrap">
+              <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+              <input type="text" id="perfil-nome" placeholder="Seu nome"/>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>E-mail</label>
+            <div class="field-wrap">
+              <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+              <input type="text" id="perfil-email" disabled style="opacity:.5;cursor:not-allowed"/>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>Chave PIX <small style="color:#555">(para receber prêmios)</small></label>
+            <div class="field-wrap">
+              <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span>
+              <input type="text" id="perfil-pix" placeholder="E-mail, CPF, telefone ou chave aleatória"/>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-pag" id="btn-salvar-perfil" style="margin-top:8px">Salvar alterações</button>
+      </div>
+
+      <div class="dash-section" style="margin-top:16px">
+        <h3>Seguranca</h3>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1e1e3a">
+          <div>
+            <p style="font-size:0.9rem;font-weight:700;color:#ccc">Senha da conta</p>
+            <p style="font-size:0.8rem;color:#555;margin-top:2px">Altere sua senha de acesso</p>
+          </div>
+          <button class="btn btn-outline" id="btn-reset-senha">Alterar senha</button>
+        </div>
+        <div style="padding-top:16px">
+          <button class="btn" style="background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:#f87171;width:100%;padding:12px;border-radius:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif" id="btn-logout2">
+            Sair da conta
+          </button>
+        </div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid #1e1e3a;text-align:center">
+          <a href="afiliado.html" style="font-size:.78rem;color:#555;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color .2s" onmouseover="this.style.color='#f5c518'" onmouseout="this.style.color='#555'">
+            Programa de Afiliados
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<!-- POPUP BÔNUS BOAS-VINDAS -->
+<div id="popup-bonus" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.75);align-items:center;justify-content:center">
+  <div style="background:#13132b;border:2px solid #f5c518;border-radius:24px;padding:40px 32px;max-width:400px;width:90%;text-align:center;position:relative;animation:popIn .4s cubic-bezier(.175,.885,.32,1.275)">
+    <div style="font-size:3rem;margin-bottom:12px">
+      <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+    </div>
+    <div style="background:linear-gradient(135deg,#f5c518,#d4a017);color:#0b0b18;font-size:.75rem;font-weight:900;padding:4px 16px;border-radius:20px;display:inline-block;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px">Bônus de Boas-vindas</div>
+    <h2 style="font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:8px">Seu saldo foi <span style="color:#4ade80">DOBRADO!</span></h2>
+    <p style="color:#888;font-size:.9rem;margin-bottom:24px">Parabéns! Seu primeiro depósito foi creditado com 100% de bônus. Aproveite e boa sorte!</p>
+    <div id="popup-bonus-val" style="font-size:2.5rem;font-weight:900;color:#f5c518;margin-bottom:24px">R$ 0,00</div>
+    <button onclick="fecharPopupBonus()" style="background:linear-gradient(135deg,#f5c518,#d4a017);color:#0b0b18;border:none;border-radius:12px;padding:14px 32px;font-size:1rem;font-weight:900;cursor:pointer;font-family:Inter,sans-serif;width:100%">Jogar Agora</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc, collection, query, where, orderBy, getDocs, onSnapshot, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyCXB1Y1dqo0nCiNUEJ5eBwVNRUp2RIEqHk",
+  authDomain: "raspa-979d4.firebaseapp.com",
+  projectId: "raspa-979d4",
+  storageBucket: "raspa-979d4.firebasestorage.app",
+  messagingSenderId: "686362667379",
+  appId: "1:686362667379:web:d7d72dd87129818ee2bd06"
+});
+const auth = getAuth(app);
+const db   = getFirestore(app);
+let currentUser = null;
+
+function fmt(v) { return Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 }); }
+function fmtData(ts) {
+  if (!ts) return '—';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+function showToast(msg, tipo) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.borderColor = tipo === 'erro' ? '#f87171' : tipo === 'ok' ? '#4ade80' : '#1e1e3a';
+  t.classList.remove('hidden');
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.add('hidden'), 3500);
+}
+function calcNivel(jogadas) {
+  if (jogadas >= 200) return { nome: 'Diamante', emoji: '💎', cor: '#67e8f9' };
+  if (jogadas >= 100) return { nome: 'Ouro', emoji: '🥇', cor: '#f5c518' };
+  if (jogadas >= 50)  return { nome: 'Prata', emoji: '🥈', cor: '#94a3b8' };
+  if (jogadas >= 20)  return { nome: 'Bronze', emoji: '🥉', cor: '#cd7f32' };
+  return { nome: 'Iniciante', emoji: '🌱', cor: '#4ade80' };
+}
+function renderNivel(jogadas) {
+  const n = calcNivel(jogadas);
+  const el = document.getElementById('dash-nivel-badge');
+  if (el) { el.textContent = n.emoji + ' ' + n.nome; el.style.background = n.cor + '22'; el.style.color = n.cor; el.style.border = '1px solid ' + n.cor + '55'; }
+}
+function statusBadge(status) {
+  const map = {
+    pendente:    '<span class="badge-status badge-pending">Pendente</span>',
+    aprovado:    '<span class="badge-status badge-ok">Aprovado</span>',
+    pago:        '<span class="badge-status badge-ok">Pago</span>',
+    recusado:    '<span class="badge-status badge-err">Recusado</span>',
+    sob_revisao: '<span class="badge-status badge-pending">Sob revisao</span>',
+  };
+  return map[status] || `<span class="badge-status badge-pending">${status}</span>`;
+}
+
+// ===== AUTH =====
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { window.location.href = 'login.html'; return; }
+  currentUser = user;
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('dash-content').classList.remove('hidden');
+  await carregarPerfil(user);
+  await carregarApostas(user.uid);
+  carregarDepositos(user.uid);
+  carregarSaques(user.uid);
+  // Live saldo listener
+  onSnapshot(doc(db, 'usuarios', user.uid), (snap) => {
+    if (!snap.exists()) return;
+    const d = snap.data();
+    document.getElementById('dash-saldo').textContent = 'R$ ' + fmt(d.saldo || 0);
+    document.getElementById('nav-saldo-val').textContent = fmt(d.saldo || 0);
+  });
+});
+
+// ===== PERFIL =====
+async function carregarPerfil(user) {
+  const snap = await getDoc(doc(db, 'usuarios', user.uid));
+  const d = snap.exists() ? snap.data() : {};
+
+  const nome = d.nome || user.displayName || 'Usuário';
+  const email = d.email || user.email || '';
+  const foto = d.fotoURL || user.photoURL || '';
+
+  document.getElementById('dash-nome').textContent = nome;
+  document.getElementById('dash-email').textContent = email;
+  document.getElementById('dash-saldo').textContent = 'R$ ' + fmt(d.saldo || 0);
+  document.getElementById('nav-saldo-val').textContent = fmt(d.saldo || 0);
+  document.getElementById('dash-jogadas').textContent = d.jogadas || 0;
+  document.getElementById('dash-ganho').textContent = 'R$ ' + fmt(d.totalGanho || 0);
+  renderNivel(d.jogadas || 0);
+
+  // Cashback: every 10 games, credit 5% of total spent
+  const jogadas = d.jogadas || 0;
+  const cashbackPago = d.cashbackPago || 0;
+  const cashbackDevido = Math.floor(jogadas / 10);
+  if (cashbackDevido > cashbackPago) {
+    const totalGasto = d.totalGasto || 0;
+    const cashbackVal = parseFloat((totalGasto * 0.05 * (cashbackDevido - cashbackPago)).toFixed(2));
+    if (cashbackVal > 0) {
+      const novoSaldo = (d.saldo || 0) + cashbackVal;
+      await updateDoc(doc(db, 'usuarios', user.uid), { saldo: novoSaldo, cashbackPago: cashbackDevido });
+      showToast('Cashback de R$ ' + fmt(cashbackVal) + ' creditado!', 'ok');
+    }
+  }
+
+  // Foto
+  if (foto) setFoto(foto);
+
+  // Preenche aba perfil
+  document.getElementById('perfil-nome').value = nome;
+  document.getElementById('perfil-email').value = email;
+  document.getElementById('perfil-pix').value = d.pixChave || '';
+
+  // Verifica bônus boas-vindas
+  verificarBonusBoasVindas(d);
+}
+
+function setFoto(src) {
+  const img = document.getElementById('dash-avatar-img');
+  const ph  = document.getElementById('dash-avatar-placeholder');
+  const pi  = document.getElementById('perfil-foto-preview-img');
+  const pph = document.getElementById('perfil-foto-placeholder');
+  img.src = src; img.classList.remove('hidden'); ph.style.display = 'none';
+  pi.src = src; pi.classList.remove('hidden'); pph.style.display = 'none';
+}
+
+// Upload foto (base64 no Firestore — simples, sem Storage)
+function handleFotoUpload(file) {
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) return showToast('⚠️ Foto muito grande. Máximo 2MB.', 'erro');
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const base64 = e.target.result;
+    setFoto(base64);
+    await updateDoc(doc(db, 'usuarios', currentUser.uid), { fotoURL: base64 });
+    showToast('✅ Foto atualizada!', 'ok');
+  };
+  reader.readAsDataURL(file);
+}
+
+document.getElementById('input-foto').addEventListener('change', (e) => handleFotoUpload(e.target.files[0]));
+document.getElementById('input-foto-perfil').addEventListener('change', (e) => handleFotoUpload(e.target.files[0]));
+
+// ===== APOSTAS =====
+async function carregarApostas(uid) {
+  const lista = document.getElementById('lista-apostas');
+  try {
+    // jogar.html salva com tipo:'jogo' e campo 'data'
+    const q = query(collection(db, 'transacoes'), where('uid','==',uid), where('tipo','==','jogo'), orderBy('data','desc'), limit(50));
+    const snap = await getDocs(q);
+    document.getElementById('apostas-count').textContent = snap.size + ' registros';
+    document.getElementById('dash-jogadas').textContent = snap.size;
+    let totalGanho = 0;
+    if (snap.empty) { lista.innerHTML = '<div class="dash-empty">Nenhuma aposta ainda. <a href="jogar.html">Jogar agora</a></div>'; return; }
+    lista.innerHTML = snap.docs.map(d => {
+      const t = d.data();
+      const ganhou = t.ganhou === true;
+      if (ganhou) totalGanho += (t.valor || 0);
+      const dataStr = t.data ? (t.data.toDate ? t.data.toDate().toLocaleDateString('pt-BR') + ' ' + t.data.toDate().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : '—') : '—';
+      const iconHtml = t.icone ? `<img src="${t.icone}" style="width:36px;height:36px;object-fit:contain;border-radius:8px;background:#0b0b18;flex-shrink:0" onerror="this.style.display='none'"/>` : `<div class="hist-row-icon ${ganhou ? 'hist-icon-win' : 'hist-icon-loss'}">${ganhou ? '★' : '○'}</div>`;
+      return `<div class="hist-row">
+        ${iconHtml}
+        <div class="hist-row-info">
+          <span class="hist-row-desc">${t.jogo || 'Raspadinha'} — ${t.premio || '—'}</span>
+          <span class="hist-row-date">${dataStr}</span>
+        </div>
+        <div class="hist-row-right">
+          <div class="hist-row-val ${ganhou ? 'val-green' : 'val-red'}">${ganhou ? '+R$ '+fmt(t.valor) : '-R$ '+fmt(t.custo||0)}</div>
+        </div>
+      </div>`;
+    }).join('');
+    document.getElementById('dash-ganho').textContent = 'R$ ' + fmt(totalGanho);
+  } catch(e) {
+    // Fallback sem orderBy (caso índice não exista ainda)
+    try {
+      const q2 = query(collection(db, 'transacoes'), where('uid','==',uid), where('tipo','==','jogo'), limit(50));
+      const snap2 = await getDocs(q2);
+      document.getElementById('apostas-count').textContent = snap2.size + ' registros';
+      document.getElementById('dash-jogadas').textContent = snap2.size;
+      let totalGanho = 0;
+      if (snap2.empty) { lista.innerHTML = '<div class="dash-empty">Nenhuma aposta ainda. <a href="jogar.html">Jogar agora</a></div>'; return; }
+      const docs = snap2.docs.sort((a,b) => { const da=a.data().data, db2=b.data().data; if(!da||!db2) return 0; return (db2.seconds||0)-(da.seconds||0); });
+      lista.innerHTML = docs.map(d => {
+        const t = d.data();
+        const ganhou = t.ganhou === true;
+        if (ganhou) totalGanho += (t.valor || 0);
+        const dataStr = t.data ? (t.data.toDate ? t.data.toDate().toLocaleDateString('pt-BR') + ' ' + t.data.toDate().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : '—') : '—';
+        const iconHtml = t.icone ? `<img src="${t.icone}" style="width:36px;height:36px;object-fit:contain;border-radius:8px;background:#0b0b18;flex-shrink:0" onerror="this.style.display='none'"/>` : `<div class="hist-row-icon ${ganhou ? 'hist-icon-win' : 'hist-icon-loss'}">${ganhou ? '★' : '○'}</div>`;
+        return `<div class="hist-row">
+          ${iconHtml}
+          <div class="hist-row-info">
+            <span class="hist-row-desc">${t.jogo || 'Raspadinha'} — ${t.premio || '—'}</span>
+            <span class="hist-row-date">${dataStr}</span>
+          </div>
+          <div class="hist-row-right">
+            <div class="hist-row-val ${ganhou ? 'val-green' : 'val-red'}">${ganhou ? '+R$ '+fmt(t.valor) : '-R$ '+fmt(t.custo||0)}</div>
+          </div>
+        </div>`;
+      }).join('');
+      document.getElementById('dash-ganho').textContent = 'R$ ' + fmt(totalGanho);
+    } catch(e2) {
+      lista.innerHTML = '<div class="dash-empty">Erro ao carregar apostas.</div>';
+    }
+  }
+}
+
+// ===== DEPÓSITOS =====
+function carregarDepositos(uid) {
+  const lista = document.getElementById('lista-depositos');
+  const q = query(collection(db, 'depositos'), where('uid','==',uid));
+  onSnapshot(q, (snap) => {
+    document.getElementById('depositos-count').textContent = snap.size + ' registros';
+    document.getElementById('dash-num-depositos').textContent = snap.size;
+    if (snap.empty) { lista.innerHTML = '<div class="dash-empty">Nenhum deposito ainda. <a href="deposito.html">Depositar agora</a></div>'; return; }
+    const docs = snap.docs.sort((a,b) => {
+      const ta = a.data().criadoEm, tb = b.data().criadoEm;
+      if (!ta || !tb) return 0;
+      return (tb.seconds||0) - (ta.seconds||0);
+    });
+    lista.innerHTML = docs.map(d => {
+      const t = d.data();
+      return `<div class="hist-row">
+        <div class="hist-row-icon hist-icon-dep">+</div>
+        <div class="hist-row-info">
+          <span class="hist-row-desc">Deposito via PIX</span>
+          <span class="hist-row-date">${fmtData(t.criadoEm)}</span>
+        </div>
+        <div class="hist-row-right">
+          <div class="hist-row-val val-green">+R$ ${fmt(t.valor)}</div>
+          ${statusBadge(t.status || 'pendente')}
+        </div>
+      </div>`;
+    }).join('');
+  }, (err) => {
+    lista.innerHTML = '<div class="dash-empty">Erro ao carregar depositos: ' + err.message + '</div>';
+  });
+}
+
+// ===== SAQUES =====
+function carregarSaques(uid) {
+  const lista = document.getElementById('lista-saques');
+  const q = query(collection(db, 'saques'), where('uid','==',uid));
+  onSnapshot(q, (snap) => {
+    document.getElementById('saques-count').textContent = snap.size + ' registros';
+    document.getElementById('dash-num-saques').textContent = snap.size;
+    if (snap.empty) { lista.innerHTML = '<div class="dash-empty">Nenhum saque ainda. <a href="saque.html">Sacar agora</a></div>'; return; }
+    const docs = snap.docs.sort((a,b) => {
+      const ta = a.data().criadoEm, tb = b.data().criadoEm;
+      if (!ta || !tb) return 0;
+      return (tb.seconds||0) - (ta.seconds||0);
+    });
+    lista.innerHTML = docs.map(d => {
+      const t = d.data();
+      return `<div class="hist-row">
+        <div class="hist-row-icon hist-icon-saque">-</div>
+        <div class="hist-row-info">
+          <span class="hist-row-desc">Saque — ${t.pixChave || '—'}</span>
+          <span class="hist-row-date">${fmtData(t.criadoEm)}</span>
+        </div>
+        <div class="hist-row-right">
+          <div class="hist-row-val val-red">-R$ ${fmt(t.valor)}</div>
+          ${statusBadge(t.status || 'pendente')}
+        </div>
+      </div>`;
+    }).join('');
+  }, (err) => {
+    lista.innerHTML = '<div class="dash-empty">Erro ao carregar saques: ' + err.message + '</div>';
+  });
+}
+
+// ===== TABS =====
+window.switchTab = function(tab, btn) {
+  document.querySelectorAll('.dash-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.dash-tab-content').forEach(c => c.classList.add('hidden'));
+  document.getElementById('tab-' + tab).classList.remove('hidden');
+  if (btn) btn.classList.add('active');
+  if (tab === 'ranking') carregarRanking();
+};
+
+// ===== RANKING =====
+function carregarRanking() {
+  const lista = document.getElementById('lista-ranking');
+  // Seed baseado no dia do ano — muda todo dia automaticamente
+  const now = new Date();
+  const seed = now.getFullYear() * 1000 + Math.floor((now - new Date(now.getFullYear(),0,0)) / 86400000);
+  function seededRand(s) { let x = Math.sin(s) * 10000; return x - Math.floor(x); }
+
+  const nomes = [
+    'Bianca R.','Carla C.','Fernanda A.','Vitoria D.','Rafael C.',
+    'Beatriz S.','Lucas T.','Gabriel R.','Ana R.','Joao P.',
+    'Mariana L.','Pedro H.','Camila F.','Thiago M.','Larissa B.',
+    'Bruno S.','Juliana N.','Diego A.','Patricia O.','Felipe G.',
+    'Renata V.','Rodrigo C.','Aline M.','Eduardo P.','Sabrina T.',
+    'Gustavo L.','Natalia R.','Henrique F.','Leticia S.','Marcos D.'
+  ];
+  const premios = [
+    {nome:'Quadriciclo', val:20000},
+    {nome:'Moto Honda 160', val:17000},
+    {nome:'Iphone 17 Pro Max', val:14000},
+    {nome:'Iphone 17', val:10000},
+    {nome:'Apple Watch Ultra', val:9000},
+    {nome:'Iphone 15 Pro Max', val:9000},
+    {nome:'PlayStation 5', val:4500},
+    {nome:'Xbox Series X', val:4200},
+    {nome:'Bolsa Gucci', val:4000},
+    {nome:'TV 55 polegadas', val:2000},
+    {nome:'Caixa de Som JBL', val:3000},
+    {nome:'R$ 500 no PIX', val:500},
+    {nome:'R$ 100 no PIX', val:100},
+    {nome:'Air Fryer', val:800},
+    {nome:'Tablet', val:700}
+  ];
+
+  // Embaralha nomes com seed do dia
+  const shuffledNomes = [...nomes].sort((a,b) => seededRand(seed + a.charCodeAt(0)) - seededRand(seed + b.charCodeAt(0)));
+  // Gera top 10 com valores decrescentes + variação diária
+  const top10 = shuffledNomes.slice(0,10).map((nome, i) => {
+    const premioIdx = Math.floor(seededRand(seed + i * 7) * premios.length);
+    const premio = premios[premioIdx];
+    // Variação de ±10% no valor baseada no dia
+    const variacao = 0.9 + seededRand(seed + i * 13) * 0.2;
+    const valor = Math.round(premio.val * variacao / 10) * 10;
+    const jogadas = 10 + Math.floor(seededRand(seed + i * 3) * 200);
+    return { nome, premio: premio.nome, valor, jogadas };
+  }).sort((a,b) => b.valor - a.valor);
+
+  const medals = ['🥇','🥈','🥉'];
+  const hoje = now.toLocaleDateString('pt-BR');
+
+  lista.innerHTML = `<div style="font-size:.75rem;color:#555;padding:8px 0 12px;text-align:center">Atualizado em ${hoje} · Renova todo dia à meia-noite</div>` +
+    top10.map((u, i) => {
+      const medal = medals[i] || `<span style="font-size:.85rem;font-weight:900;color:#555">#${i+1}</span>`;
+      const mascarado = u.nome.split(' ')[0] + ' ' + (u.nome.split(' ')[1] || '').charAt(0) + '***';
+      return `<div class="hist-row">
+        <div style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0">${medal}</div>
+        <div class="hist-row-info">
+          <span class="hist-row-desc">${mascarado}</span>
+          <span class="hist-row-date">${u.premio} · ${u.jogadas} jogadas</span>
+        </div>
+        <div class="hist-row-right">
+          <div class="hist-row-val val-green">R$ ${fmt(u.valor)}</div>
+        </div>
+      </div>`;
+    }).join('');
+}
+
+// ===== POPUP BÔNUS =====
+window.fecharPopupBonus = function() {
+  document.getElementById('popup-bonus').style.display = 'none';
+  window.location.href = 'jogar.html';
+};
+function verificarBonusBoasVindas(dados) {
+  if (dados.bonusBoasVindasMostrado) return;
+  if (!dados.primeiroDeposito) return;
+  // Se já depositou (totalDepositado > 0) e o bonus ainda não foi mostrado
+  if ((dados.totalDepositado || 0) > 0) {
+    const saldo = dados.saldo || 0;
+    document.getElementById('popup-bonus-val').textContent = 'R$ ' + fmt(saldo);
+    document.getElementById('popup-bonus').style.display = 'flex';
+    updateDoc(doc(db, 'usuarios', currentUser.uid), { bonusBoasVindasMostrado: true });
+  }
+}
+document.getElementById('btn-salvar-perfil').addEventListener('click', async () => {
+  const nome = document.getElementById('perfil-nome').value.trim();
+  const pix  = document.getElementById('perfil-pix').value.trim();
+  const btn  = document.getElementById('btn-salvar-perfil');
+  if (!nome) return showToast('⚠️ Informe seu nome.', 'erro');
+  btn.disabled = true; btn.textContent = '⏳ Salvando...';
+  try {
+    await updateDoc(doc(db, 'usuarios', currentUser.uid), { nome, pixChave: pix });
+    await updateProfile(currentUser, { displayName: nome });
+    document.getElementById('dash-nome').textContent = nome;
+    showToast('✅ Perfil atualizado!', 'ok');
+  } catch(e) { showToast('❌ Erro ao salvar.', 'erro'); }
+  btn.disabled = false; btn.textContent = 'Salvar alterações';
+});
+
+// ===== RESET SENHA =====
+document.getElementById('btn-reset-senha').addEventListener('click', async () => {
+  try {
+    await sendPasswordResetEmail(auth, currentUser.email);
+    showToast('📧 E-mail de redefinição enviado!', 'ok');
+  } catch(e) { showToast('❌ Erro ao enviar e-mail.', 'erro'); }
+});
+
+// ===== LOGOUT =====
+async function fazerLogout() {
+  await signOut(auth);
+  window.location.href = 'index.html';
+}
+document.getElementById('btn-logout').addEventListener('click', fazerLogout);
+document.getElementById('btn-logout2').addEventListener('click', fazerLogout);
+</script>
+<a href="https://t.me/Tazz_7x" target="_blank" rel="noopener" style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#0088cc;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,136,204,.5);text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" title="Suporte via Telegram"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+</body>
+</html>

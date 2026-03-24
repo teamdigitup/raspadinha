@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raspaetz7 - Cadastrar</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body class="auth-page">
+
+<div class="particles" aria-hidden="true">
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<div class="auth-full">
+  <div class="auth-left">
+    <a href="index.html" class="auth-brand"><img src="https://raspadinhaum7d.online/assets/upload/68e26d2c4d315.png" alt="Raspaetz7" style="height:40px;object-fit:contain"/></a>
+    <div class="auth-left-content">
+      <h1>Crie sua conta<br/><span class="gold-text">e comece a ganhar</span></h1>
+      <p>Cadastro gratuito em segundos. Sem CPF obrigatório.</p>
+      <div class="auth-features">
+        <div class="auth-feat"><span class="feat-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></span><span>100% de bônus no primeiro depósito</span></div>
+        <div class="auth-feat"><span class="feat-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg></span><span>PIX instantâneo para depósito e saque</span></div>
+        <div class="auth-feat"><span class="feat-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span>Prêmios de até R$ 20.000</span></div>
+        <div class="auth-feat"><span class="feat-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span><span>7 tipos de raspadinha disponíveis</span></div>
+      </div>
+      <div class="auth-bonus-card">
+        <div class="bonus-big">+100%</div>
+        <div>
+          <p style="font-weight:800;color:#f5c518">Bônus de Boas-vindas</p>
+          <p style="font-size:0.8rem;color:#aaa">Deposite R$50 e jogue com R$100</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <a href="login.html" class="auth-tab">Entrar</a>
+        <a href="cadastro.html" class="auth-tab active">Cadastrar</a>
+      </div>
+
+      <h2>Criar conta grátis</h2>
+      <p class="auth-sub">Leva menos de 1 minuto</p>
+
+      <div id="auth-error" class="auth-error hidden"></div>
+
+      <div class="field-group">
+        <label>Nome completo</label>
+        <div class="field-wrap">
+          <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+          <input type="text" id="cad-nome" placeholder="Seu nome completo" autocomplete="name"/>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>E-mail</label>
+        <div class="field-wrap">
+          <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+          <input type="email" id="cad-email" placeholder="seu@email.com" autocomplete="email"/>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Senha</label>
+        <div class="field-wrap">
+          <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          <input type="password" id="cad-senha" placeholder="Mínimo 6 caracteres" autocomplete="new-password"/>
+          <span class="field-toggle" id="toggle-senha"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Chave PIX <span style="color:#555;font-weight:400;font-size:0.78rem">(para receber prêmios)</span></label>
+        <div class="field-wrap">
+          <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span>
+          <input type="text" id="cad-pix" placeholder="E-mail, CPF ou telefone (opcional)"/>
+        </div>
+      </div>
+
+      <button class="btn-auth" id="btn-cadastrar">Criar conta grátis</button>
+
+      <p class="auth-footer-link">Já tem conta? <a href="login.html">Entrar</a></p>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCXB1Y1dqo0nCiNUEJ5eBwVNRUp2RIEqHk",
+    authDomain: "raspa-979d4.firebaseapp.com",
+    projectId: "raspa-979d4",
+    storageBucket: "raspa-979d4.firebasestorage.app",
+    messagingSenderId: "686362667379",
+    appId: "1:686362667379:web:d7d72dd87129818ee2bd06"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  function showError(msg) {
+    const el = document.getElementById('auth-error');
+    el.textContent = msg;
+    el.classList.remove('hidden');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.remove('hidden');
+    setTimeout(() => t.classList.add('hidden'), 3000);
+  }
+
+  function firebaseError(code) {
+    const map = {
+      'auth/email-already-in-use': 'E-mail já cadastrado.',
+      'auth/invalid-email': 'E-mail inválido.',
+      'auth/weak-password': 'Senha muito fraca (mínimo 6 caracteres).',
+      'auth/network-request-failed': 'Sem conexão com a internet.',
+    };
+    return map[code] || 'Erro: ' + code;
+  }
+
+  document.getElementById('btn-cadastrar').addEventListener('click', async () => {
+    const nome = document.getElementById('cad-nome').value.trim();
+    const email = document.getElementById('cad-email').value.trim();
+    const senha = document.getElementById('cad-senha').value;
+    const pix = document.getElementById('cad-pix').value.trim();
+    const btn = document.getElementById('btn-cadastrar');
+
+    if (!nome) return showError('Informe seu nome.');
+    if (!email) return showError('Informe seu e-mail.');
+    if (!senha || senha.length < 6) return showError('Senha deve ter pelo menos 6 caracteres.');
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Criando conta...';
+
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, senha);
+      await updateProfile(cred.user, { displayName: nome });
+      await setDoc(doc(db, 'usuarios', cred.user.uid), {
+        nome, email, pixChave: pix || '',
+        saldo: 0, totalGanho: 0, totalDepositado: 0,
+        jogadas: 0, primeiroDeposito: true,
+        refBy: new URLSearchParams(location.search).get('ref') || '',
+        criadoEm: serverTimestamp()
+      });
+      showToast('✅ Conta criada! Bem-vindo ao Raspaetz7!');
+      setTimeout(() => window.location.href = 'dashboard.html', 1500);
+    } catch (e) {
+      showError(firebaseError(e.code));
+      btn.disabled = false;
+      btn.textContent = 'Criar conta grátis';
+    }
+  });
+
+  document.getElementById('toggle-senha').addEventListener('click', () => {
+    const input = document.getElementById('cad-senha');
+    input.type = input.type === 'password' ? 'text' : 'password';
+  });
+</script>
+<a href="https://t.me/Tazz_7x" target="_blank" rel="noopener" style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#0088cc;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,136,204,.5);text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" title="Suporte via Telegram"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+</body>
+</html>

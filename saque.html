@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raspaetz7 - Sacar</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><img src="https://raspadinhaum7d.online/assets/upload/68e26d2c4d315.png" alt="Raspaetz7"/></a>
+    <div class="nav-user">
+      <div class="nav-saldo-wrap">
+        <span class="nav-saldo-label">Saldo</span>
+        <span class="nav-saldo-val">R$ <span id="nav-saldo-val">0,00</span></span>
+      </div>
+      <a href="dashboard.html" class="btn btn-outline">Voltar</a>
+    </div>
+  </div>
+</nav>
+
+<div class="pag-wrap">
+  <div class="pag-card" id="step1">
+    <div class="pag-header">
+      <div class="pag-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 17 12 21 8 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg></div>
+      <h2>Solicitar Saque</h2>
+      <p>Retire seus ganhos diretamente no seu PIX</p>
+    </div>
+    <div class="saldo-destaque">
+      <span>Saldo disponível para saque</span>
+      <strong id="saldo-disp">R$ 0,00</strong>
+    </div>
+    <div class="field-group">
+      <label>Valor do saque (R$)</label>
+      <div class="field-wrap valor-input-wrap">
+        <span class="valor-prefix">R$</span>
+        <input type="number" id="input-saque" placeholder="0,00" min="20" max="5000"/>
+      </div>
+      <small style="color:#555;font-size:0.78rem">Mínimo: R$ 20,00 · Máximo: R$ 5.000,00</small>
+    </div>
+    <div class="field-group">
+      <label>Chave PIX para receber</label>
+      <div class="field-wrap">
+        <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span>
+        <input type="text" id="input-pix" placeholder="E-mail, CPF, telefone ou chave aleatória"/>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Tipo da chave</label>
+      <div class="field-wrap">
+        <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span>
+        <select id="input-tipo-pix">
+          <option value="email">E-mail</option>
+          <option value="cpf">CPF</option>
+          <option value="telefone">Telefone</option>
+          <option value="aleatoria">Chave aleatória</option>
+        </select>
+      </div>
+    </div>
+    <div class="regras-saque">
+      <h4>Informações importantes</h4>
+      <ul>
+        <li>Saques processados em até <strong>24 horas</strong></li>
+        <li>Valor mínimo: <strong>R$ 20,00</strong> · Máximo: <strong>R$ 5.000,00</strong></li>
+        <li>Limite de <strong>5 saques por dia</strong></li>
+        <li>Apenas um saque pendente por vez</li>
+        <li>Verifique os dados antes de confirmar</li>
+      </ul>
+    </div>
+    <button class="btn-pag" id="btn-solicitar" onclick="solicitarSaque()">Solicitar Saque</button>
+  </div>
+
+  <div class="pag-card hidden" id="step2">
+    <div class="pag-header">
+      <div class="pag-icon" id="step2-icon">⏳</div>
+      <h2 id="step2-titulo">Saque Solicitado!</h2>
+      <p id="step2-sub">Seu saque está sob revisão</p>
+    </div>
+    <div id="status-box-pendente" class="status-card status-pending">
+      <div class="status-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <div><strong>Sob Revisão</strong><span>Estamos processando seu saque</span></div>
+    </div>
+    <div id="status-box-aprovado" class="status-card status-ok" style="display:none">
+      <div class="status-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div><strong>Aprovado!</strong><span>PIX enviado para sua chave</span></div>
+    </div>
+    <div id="status-box-recusado" class="status-card status-err" style="display:none">
+      <div class="status-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+      <div><strong>Recusado</strong><span>Saldo devolvido para sua conta</span></div>
+    </div>
+    <div class="pix-dados">
+      <div class="pix-dado-row"><span>Valor solicitado</span><span id="conf-valor" style="color:#4ade80;font-weight:800">R$ 0,00</span></div>
+      <div class="pix-dado-row"><span>Chave PIX</span><span id="conf-pix" style="color:#f5c518">—</span></div>
+      <div class="pix-dado-row"><span>Tipo</span><span id="conf-tipo">—</span></div>
+      <div class="pix-dado-row"><span>Prazo</span><span>Até 24 horas</span></div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item tl-done"><span class="tl-dot"></span><span>Saque solicitado</span><span class="tl-time">Agora</span></div>
+      <div class="tl-item tl-active" id="tl-step2"><span class="tl-dot"></span><span>Em análise pela equipe</span><span class="tl-time">Em andamento</span></div>
+      <div class="tl-item" id="tl-step3"><span class="tl-dot"></span><span>PIX enviado para sua conta</span><span class="tl-time">Até 24h</span></div>
+    </div>
+    <div class="aviso-box" id="step2-aviso">Você receberá o valor diretamente na chave PIX informada.</div>
+    <a href="dashboard.html" class="btn-pag" style="display:block;text-align:center;text-decoration:none">Voltar para Minha Conta</a>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, updateDoc, addDoc, collection, serverTimestamp, query, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const app = initializeApp({
+    apiKey: "AIzaSyCXB1Y1dqo0nCiNUEJ5eBwVNRUp2RIEqHk",
+    authDomain: "raspa-979d4.firebaseapp.com",
+    projectId: "raspa-979d4",
+    storageBucket: "raspa-979d4.firebasestorage.app",
+    messagingSenderId: "686362667379",
+    appId: "1:686362667379:web:d7d72dd87129818ee2bd06"
+  });
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  let currentUser = null;
+  let saldoAtual = 0;
+  let unsubSaque = null;
+
+  function fmt(v) { return Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2 }); }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.remove('hidden');
+    setTimeout(() => t.classList.add('hidden'), 3500);
+  }
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = 'login.html'; return; }
+    currentUser = user;
+    const snap = await getDoc(doc(db, 'usuarios', user.uid));
+    const dados = snap.data() || {};
+    saldoAtual = dados.saldo || 0;
+    document.getElementById('nav-saldo-val').textContent = fmt(saldoAtual);
+    document.getElementById('saldo-disp').textContent = 'R$ ' + fmt(saldoAtual);
+    if (dados.pixChave) document.getElementById('input-pix').value = dados.pixChave;
+  });
+
+  window.solicitarSaque = async function() {
+    const valor = parseFloat(document.getElementById('input-saque').value);
+    const pix = document.getElementById('input-pix').value.trim();
+    const tipo = document.getElementById('input-tipo-pix').value;
+    const btn = document.getElementById('btn-solicitar');
+    if (!valor || valor < 20) return showToast('Valor mínimo: R$ 20,00');
+    if (valor > 5000) return showToast('Valor máximo: R$ 5.000,00');
+    if (!pix) return showToast('Informe sua chave PIX');
+    if (valor > saldoAtual) return showToast('Saldo insuficiente');
+    btn.disabled = true; btn.textContent = 'Verificando...';
+    try {
+      // Check for existing pending saque
+      const qPend = query(collection(db, 'saques'), where('uid','==',currentUser.uid), where('status','==','pendente'));
+      const pendSnap = await getDocs(qPend);
+      if (!pendSnap.empty) {
+        showToast('Você já tem um saque pendente. Aguarde a aprovação antes de solicitar outro.');
+        btn.disabled = false; btn.textContent = 'Solicitar Saque';
+        return;
+      }
+      // Check daily limit (5 saques por dia)
+      const hoje = new Date(); hoje.setHours(0,0,0,0);
+      const qHoje = query(collection(db, 'saques'), where('uid','==',currentUser.uid));
+      const hojeSnap = await getDocs(qHoje);
+      const saquesHoje = hojeSnap.docs.filter(d => {
+        const ts = d.data().criadoEm;
+        if (!ts) return false;
+        const data = ts.toDate ? ts.toDate() : new Date(ts);
+        return data >= hoje;
+      });
+      if (saquesHoje.length >= 5) {
+        showToast('Limite de 5 saques por dia atingido. Tente novamente amanhã.');
+        btn.disabled = false; btn.textContent = 'Solicitar Saque';
+        return;
+      }
+      btn.textContent = 'Processando...';
+      await updateDoc(doc(db, 'usuarios', currentUser.uid), { saldo: saldoAtual - valor });
+      const saqueRef = await addDoc(collection(db, 'saques'), { uid: currentUser.uid, valor, pixChave: pix, tipoPix: tipo, status: 'pendente', criadoEm: serverTimestamp() });
+      await addDoc(collection(db, 'transacoes'), { uid: currentUser.uid, tipo: 'saque', valor, descricao: 'Saque solicitado — ' + pix, status: 'pendente', criadoEm: serverTimestamp() });
+      document.getElementById('conf-valor').textContent = 'R$ ' + fmt(valor);
+      document.getElementById('conf-pix').textContent = pix;
+      document.getElementById('conf-tipo').textContent = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('step2').classList.remove('hidden');
+      // Escuta em tempo real o status do saque
+      unsubSaque = onSnapshot(doc(db, 'saques', saqueRef.id), (snap) => {
+        if (!snap.exists()) return;
+        const status = snap.data().status;
+        if (status === 'aprovado') {
+          document.getElementById('step2-icon').textContent = '✅';
+          document.getElementById('step2-titulo').textContent = 'Saque Aprovado!';
+          document.getElementById('step2-sub').textContent = 'PIX enviado para sua chave';
+          document.getElementById('status-box-pendente').style.display = 'none';
+          document.getElementById('status-box-aprovado').style.display = 'flex';
+          document.getElementById('tl-step2').classList.remove('tl-active');
+          document.getElementById('tl-step2').classList.add('tl-done');
+          document.getElementById('tl-step3').classList.add('tl-done');
+          document.getElementById('step2-aviso').textContent = 'O PIX foi enviado. Verifique sua conta bancária.';
+          if (unsubSaque) { unsubSaque(); unsubSaque = null; }
+        } else if (status === 'recusado') {
+          document.getElementById('step2-icon').textContent = '❌';
+          document.getElementById('step2-titulo').textContent = 'Saque Recusado';
+          document.getElementById('step2-sub').textContent = 'Seu saldo foi devolvido';
+          document.getElementById('status-box-pendente').style.display = 'none';
+          document.getElementById('status-box-recusado').style.display = 'flex';
+          document.getElementById('step2-aviso').textContent = 'O saldo foi devolvido para sua conta. Entre em contato com o suporte.';
+          if (unsubSaque) { unsubSaque(); unsubSaque = null; }
+        }
+      });
+    } catch(e) {
+      showToast('Erro ao solicitar saque.');
+      btn.disabled = false; btn.textContent = 'Solicitar Saque';
+    }
+  };
+</script>
+<a href="https://t.me/Tazz_7x" target="_blank" rel="noopener" style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#0088cc;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,136,204,.5);text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" title="Suporte via Telegram"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+</body>
+</html>

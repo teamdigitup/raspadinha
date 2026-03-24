@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raspaetz7 - Entrar</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body class="auth-page">
+
+<div class="particles" aria-hidden="true">
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<div class="auth-full">
+  <div class="auth-left">
+    <a href="index.html" class="auth-brand"><img src="https://raspadinhaum7d.online/assets/upload/68e26d2c4d315.png" alt="Raspaetz7" style="height:40px;object-fit:contain"/></a>
+    <div class="auth-left-content">
+      <h1>Raspe e ganhe<br/><span class="gold-text">prêmios reais</span></h1>
+      <p>Mais de 12.000 jogadores já ganharam prêmios incríveis. Sua vez chegou.</p>
+      <div class="auth-features">
+        <div class="auth-feat"><span class="feat-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg></span><span>Depósito e saque via PIX instantâneo</span></div>
+        <div class="auth-feat"><span class="feat-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span>Prêmios de até R$ 20.000</span></div>
+        <div class="auth-feat"><span class="feat-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></span><span>100% de bônus no primeiro depósito</span></div>
+        <div class="auth-feat"><span class="feat-icon-svg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span>Plataforma segura e confiável</span></div>
+      </div>
+      <div class="auth-winners-mini">
+        <p class="mini-title">Últimos ganhadores</p>
+        <div class="mini-winner"><img src="https://raspae.site/assets/img/icons/687ecc9b235f0.png" alt=""/><span>Henrique A***</span><span class="mini-val">R$ 20.000</span></div>
+        <div class="mini-winner"><img src="https://raspae.site/assets/img/icons/687ec37ddd12b.png" alt=""/><span>Leonardo C***</span><span class="mini-val">R$ 12.000</span></div>
+        <div class="mini-winner"><img src="https://raspae.site/assets/img/icons/687ecbffd70fb.png" alt=""/><span>Rafael R***</span><span class="mini-val">R$ 5.000</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <a href="login.html" class="auth-tab active">Entrar</a>
+        <a href="cadastro.html" class="auth-tab">Cadastrar</a>
+      </div>
+
+      <h2>Bem-vindo de volta!</h2>
+      <p class="auth-sub">Entre na sua conta e continue jogando</p>
+
+      <div id="auth-error" class="auth-error hidden"></div>
+
+      <div class="field-group">
+        <label>E-mail</label>
+        <div class="field-wrap">
+          <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+          <input type="email" id="login-email" placeholder="seu@email.com" autocomplete="email"/>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Senha</label>
+        <div class="field-wrap">
+          <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          <input type="password" id="login-senha" placeholder="••••••••" autocomplete="current-password"/>
+          <span class="field-toggle" id="toggle-senha">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </span>
+        </div>
+        <a href="#" class="field-hint" id="link-recuperar">Esqueci minha senha</a>
+      </div>
+
+      <button class="btn-auth" id="btn-entrar">Entrar na conta</button>
+
+      <p class="auth-footer-link">Não tem conta? <a href="cadastro.html">Cadastre-se grátis</a></p>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<!-- Firebase via CDN -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCXB1Y1dqo0nCiNUEJ5eBwVNRUp2RIEqHk",
+    authDomain: "raspa-979d4.firebaseapp.com",
+    projectId: "raspa-979d4",
+    storageBucket: "raspa-979d4.firebasestorage.app",
+    messagingSenderId: "686362667379",
+    appId: "1:686362667379:web:d7d72dd87129818ee2bd06"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  function showError(msg) {
+    const el = document.getElementById('auth-error');
+    el.textContent = msg;
+    el.classList.remove('hidden');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.remove('hidden');
+    setTimeout(() => t.classList.add('hidden'), 3000);
+  }
+
+  function firebaseError(code) {
+    const map = {
+      'auth/invalid-email': 'E-mail inválido.',
+      'auth/user-not-found': 'Usuário não encontrado.',
+      'auth/wrong-password': 'Senha incorreta.',
+      'auth/invalid-credential': 'E-mail ou senha incorretos.',
+      'auth/too-many-requests': 'Muitas tentativas. Aguarde e tente novamente.',
+      'auth/network-request-failed': 'Sem conexão com a internet.',
+    };
+    return map[code] || 'Erro: ' + code;
+  }
+
+  // Botão entrar
+  document.getElementById('btn-entrar').addEventListener('click', async () => {
+    const email = document.getElementById('login-email').value.trim();
+    const senha = document.getElementById('login-senha').value;
+    const btn = document.getElementById('btn-entrar');
+
+    if (!email || !senha) return showError('Preencha e-mail e senha.');
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Entrando...';
+
+    try {
+      await signInWithEmailAndPassword(auth, email, senha);
+      showToast('✅ Login realizado!');
+      setTimeout(() => window.location.href = 'dashboard.html', 1000);
+    } catch (e) {
+      showError(firebaseError(e.code));
+      btn.disabled = false;
+      btn.textContent = 'Entrar na conta';
+    }
+  });
+
+  // Enter no campo senha
+  document.getElementById('login-senha').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('btn-entrar').click();
+  });
+
+  // Toggle senha
+  document.getElementById('toggle-senha').addEventListener('click', () => {
+    const input = document.getElementById('login-senha');
+    input.type = input.type === 'password' ? 'text' : 'password';
+  });
+
+  // Recuperar senha
+  document.getElementById('link-recuperar').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value.trim();
+    if (!email) return showError('Digite seu e-mail primeiro.');
+    try {
+      await sendPasswordResetEmail(auth, email);
+      showToast('📧 E-mail de recuperação enviado!');
+    } catch (e) {
+      showError('E-mail não encontrado.');
+    }
+  });
+</script>
+<a href="https://t.me/Tazz_7x" target="_blank" rel="noopener" style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#0088cc;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,136,204,.5);text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" title="Suporte via Telegram"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+</body>
+</html>
