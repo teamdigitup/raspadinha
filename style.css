@@ -614,3 +614,93 @@ body.auth-page{background:#080814;overflow-x:hidden}
   .jogo-info-bar{flex-direction:column;align-items:flex-start}
   .jib-right{width:100%;justify-content:space-between}
 }
+
+/* ===== MOBILE FIXES ===== */
+@media(max-width:768px){
+  /* Navbar */
+  .nav-inner{padding:0 16px;gap:8px}
+  .nav-center{display:none}
+  .nav-links{gap:6px}
+  .nav-links .btn{padding:7px 12px;font-size:0.78rem}
+  .nav-user{gap:6px}
+  .nav-user .btn{padding:7px 10px;font-size:0.75rem}
+  .nav-saldo-wrap{display:none}
+
+  /* Hero */
+  .hero{padding:40px 16px 48px}
+  .hero-inner{flex-direction:column;gap:32px}
+  .hero-text h1{font-size:2rem}
+  .hero-badge{font-size:0.65rem}
+  .hero-sub{font-size:0.9rem}
+  .hero-btns{flex-direction:column;gap:10px}
+  .btn-hero-main,.btn-hero-sec{width:100%;justify-content:center;text-align:center}
+  .hero-trust{gap:12px}
+  .trust-item{padding:0 10px}
+  .trust-num{font-size:1.1rem}
+  .hero-banners{display:none}
+
+  /* Sections */
+  .section{padding:48px 16px}
+  .section-header h2{font-size:1.5rem}
+
+  /* Cards grid */
+  .cards-grid{grid-template-columns:1fr}
+
+  /* Winners grid */
+  .winners-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .wcard{padding:10px}
+  .wcard img{width:36px;height:36px}
+
+  /* How it works */
+  .how-grid{flex-direction:column;align-items:center;gap:0}
+  .how-step{width:100%;max-width:320px}
+  .how-arrow{transform:rotate(90deg);padding:4px 0}
+
+  /* Footer */
+  .footer{padding:40px 16px 24px}
+  .footer-top{grid-template-columns:1fr;gap:24px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:8px}
+
+  /* Auth */
+  .auth-left{display:none}
+  .auth-right{width:100%;padding:24px 16px}
+  .auth-card{max-width:100%}
+
+  /* Dashboard */
+  .dash-wrap{padding:16px 12px}
+  .dash-profile-card{padding:20px 16px;flex-direction:column;align-items:flex-start}
+  .dash-profile-right{align-items:flex-start;width:100%}
+  .dash-saldo-big{text-align:left}
+  .dash-profile-actions{justify-content:flex-start;flex-wrap:wrap}
+  .dash-stats{grid-template-columns:1fr 1fr;gap:10px}
+  .dash-stat-card{padding:14px}
+  .dash-tabs{gap:2px}
+  .dash-tab{font-size:0.72rem;padding:8px 6px}
+  .dash-section{padding:16px}
+
+  /* Deposito/Saque */
+  .pag-wrap{padding:0 12px;margin:24px auto}
+  .pag-card{padding:24px 16px}
+  .valores-rapidos{grid-template-columns:repeat(3,1fr);gap:8px}
+  .pag-btns{grid-template-columns:1fr}
+
+  /* Jogar */
+  .game-main{padding:12px;grid-template-columns:1fr}
+  .game-right{position:static}
+  .gsel-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .gsel-thumb{height:120px}
+  .gc-header{flex-direction:column;align-items:flex-start;gap:6px}
+  .gc-body{padding:16px}
+  .scratch-wrap{max-width:100%}
+  .saldo-bar{padding:12px 14px}
+  .saldo-v{font-size:1.2rem}
+}
+
+@media(max-width:400px){
+  .gsel-grid{grid-template-columns:1fr}
+  .winners-grid{grid-template-columns:1fr 1fr}
+  .hero-text h1{font-size:1.7rem}
+  .dash-stats{grid-template-columns:1fr 1fr}
+  .dash-tab{font-size:0.68rem;padding:7px 4px}
+}
+
